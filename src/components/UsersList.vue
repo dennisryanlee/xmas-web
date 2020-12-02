@@ -1,19 +1,20 @@
 <template>
 	<div class="users-list">
 		<h3>Hello</h3>
-		<ul>
-			<li>Pauline</li>
-			<li>Servane</li>
-			<li>Gautier</li>
-			<li>Valentine</li>
-			<li>Luc</li>
-		</ul>
+		<div v-for="user in users" :key="user">
+			<router-link :to="{ name: 'User', params: { userId: user._id } }">{{ user.name }}</router-link>
+		</div>
+
+		<el-button>Nouveau tirage au sort</el-button>
 	</div>
 </template>
 
 <script>
 export default {
-	name: 'UsersList'
+	name: 'UsersList',
+	props: {
+		users: Array
+	}
 }
 </script>
 
