@@ -1,15 +1,18 @@
 <template>
 	<UsersList :users="users" />
+	<EventGenerator />
 </template>
 
 <script>
 import UsersList from '@/components/UsersList.vue'
+import EventGenerator from '@/components/EventGenerator.vue'
 import axios from 'axios'
 
 export default {
 	name: 'Home',
 	components: {
-		UsersList
+		UsersList,
+		EventGenerator
 	},
 	data() {
 		return {

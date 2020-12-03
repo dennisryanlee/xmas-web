@@ -1,12 +1,17 @@
 <template>
 	<div>Bonjour {{ user.name }} !</div>
+	<SenderDraws v-if="user._id" :senderId="user._id" />
 </template>
 
 <script>
-import axios from 'axios'
+import axios from 'axios';
+import SenderDraws from '@/components/SenderDraws.vue'
 
 export default {
 	name: 'User',
+	components: {
+		SenderDraws
+	},
 	data() {
 		return {
 			user: {}
@@ -21,8 +26,6 @@ export default {
 			.then(res => {
 				let { data: user = {} } = res || {};
 				this.user = user;
-
-				console.log('user=', user);
 			})
 			.catch(err => { console.log('ERROR: error while getting info', err) })
 	}
