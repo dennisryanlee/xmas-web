@@ -1,6 +1,7 @@
 import { createWebHistory, createRouter } from "vue-router";
 import Home from "@/views/Home.vue";
 import User from "@/views/User.vue";
+import Event from "@/views/Event.vue";
 
 const routes = [
 	{
@@ -9,7 +10,12 @@ const routes = [
 		component: Home,
 	},
 	{
-		path: "/user/:userId",
+		path: "/event/:eventId?",
+		name: "Event",
+		component: Event,
+	},
+	{
+		path: "/users/:userId",
 		name: "User",
 		component: User,
 	},

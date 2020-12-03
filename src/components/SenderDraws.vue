@@ -1,7 +1,7 @@
 <template>
 	<div class="sender-draws">
 		<div v-for="senderDraw in senderDraws" :key="senderDraw._id">
-			<div>Vous devez offrir un cadeau lors de <strong>{{senderDraw.event.name}}</strong> à <strong>{{senderDraw.receiver.name}}</strong></div>
+			<div>Tu vas devoir offrir un cadeau lors de <strong>{{senderDraw.event.name}}</strong> à <strong>{{senderDraw.receiver.name}}</strong></div>
 		</div>
 	</div>
 </template>

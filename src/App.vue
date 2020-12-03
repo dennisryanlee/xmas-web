@@ -1,9 +1,13 @@
 <template>
 	<div id="app">
 		<div id="nav">
-			<router-link to="/">Home</router-link>
+			<router-link to="/">Accueil</router-link>
+			-
+			<router-link to="/event">Nouveau tirage</router-link>
 		</div>
-		<router-view />
+		<el-main>
+			<router-view />
+		</el-main>
 	</div>
 </template>
 

@@ -1,15 +1,19 @@
 <template>
-	<UsersList :users="users" />
+	<el-row type="flex" justify="center">
+		<el-col type="flex" :span="24">
+			<EventGenerator />
+		</el-col>
+	</el-row>
 </template>
 
 <script>
-import UsersList from '@/components/UsersList.vue'
+import EventGenerator from '@/components/EventGenerator.vue'
 import axios from 'axios'
 
 export default {
 	name: 'Home',
 	components: {
-		UsersList
+		EventGenerator
 	},
 	data() {
 		return {
@@ -28,12 +32,4 @@ export default {
 </script>
 
 <style>
-#app {
-	font-family: Avenir, Helvetica, Arial, sans-serif;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-	text-align: center;
-	color: #2c3e50;
-	margin-top: 60px;
-}
 </style>
