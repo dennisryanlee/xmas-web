@@ -11,13 +11,14 @@ import EventGenerator from '@/components/EventGenerator.vue'
 import axios from 'axios'
 
 export default {
-	name: 'Home',
+	name: 'Event',
 	components: {
 		EventGenerator
 	},
 	data() {
 		return {
-			users: []
+			users: [],
+			eventId: null
 		}
 	},
 	mounted() {

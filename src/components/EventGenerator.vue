@@ -1,5 +1,5 @@
 <template>
-	<div class="event-generator">
+	<div v-if="loaded" class="event-generator">
 		<h3>Nouveau tirage au sort</h3>
 		<el-form ref="form" :model="event" label-width="120px" label-position="right">
 			<el-form-item label="Nom:">
@@ -7,7 +7,7 @@
 			</el-form-item>
 			<el-form-item label="Participants:">
 				<el-select v-model="event.users" multiple filterable :loading="loading">
-					<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
+					<el-option v-for="item in options" :key="item._id" :label="item.name" :value="item._id"> </el-option>
 				</el-select>
 			</el-form-item>
 			<el-form-item label="Exceptions:">
@@ -15,13 +15,13 @@
 					<div v-for="(exception, idx) in event.exceptions" :key="exception.senderId">
 						<el-col :span="7">
 							<el-select v-model="exception.senderId" filterable :loading="loading">
-								<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
+								<el-option v-for="item in options" :key="item._id" :label="item.name" :value="item._id"> </el-option>
 							</el-select>
 						</el-col>
 						<el-col class="line" :span="6">ne donnera pas à</el-col>
 						<el-col :span="7">
 							<el-select v-model="exception.receiverIds" multiple filterable :loading="loading">
-								<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
+								<el-option v-for="item in options" :key="item._id" :label="item.name" :value="item._id"> </el-option>
 							</el-select>
 						</el-col>
 						<el-col class="line" :span="4">
@@ -54,13 +54,14 @@ export default {
 				exceptions: []
 			},
 			options: [],
-			loading: false
+			loading: false,
+			loaded: false
 		}
 	},
 	methods: {
 		onSubmit() {
 			axios.post('http://localhost:5000/v1/xmas/events', { event: this.event })
-				.then(res => {
+				.then(() => {
 					this.$notify({ title: 'Succès', message: "Un nouveau tirage au sort a été créé", type: 'success' });
 					this.$router.push({ name: 'Home' });
 				})
@@ -77,17 +78,32 @@ export default {
 		}
 	},
 	mounted() {
+		let { eventId = null } = this.$route.params || {};
+
+		if (eventId && eventId !== 'new') {
+			axios.get(`http://localhost:5000/v1/xmas/events/${eventId}`)
+				.then(res => {
+					let { data: event = null } = res || {};
+					if (event) this.event = event;
+				})
+				.catch(err => {
+					console.log('ERROR: EventGenerator.vue#function - Error while getting users:', err);
+				})
+		}
+
 		axios.get('http://localhost:5000/v1/xmas/users')
 			.then(res => {
 				let { data: users = [] } = res || {};
 
 				this.options = users.map(user => {
-					return { value: `${user._id}`, label: `${user.name}` };
+					return { _id: `${user._id}`, name: `${user.name}` };
 				})
 			})
 			.catch(err => {
 				console.log('ERROR: EventGenerator.vue#function - Error while getting users:', err);
 			})
+
+		setTimeout(() => { this.loaded = true; }, 200);
 	}
 }
 </script>
