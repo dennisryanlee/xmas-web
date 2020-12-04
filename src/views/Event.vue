@@ -1,6 +1,6 @@
 <template>
 	<el-row type="flex" justify="center">
-		<el-col type="flex" :span="24">
+		<el-col type="flex" :span="16">
 			<EventGenerator />
 		</el-col>
 	</el-row>

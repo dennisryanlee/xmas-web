@@ -3,7 +3,7 @@
 		<div id="nav">
 			<router-link to="/">Accueil</router-link>
 			-
-			<router-link to="/event">Nouveau tirage</router-link>
+			<router-link to="/events">Nouveau tirage</router-link>
 		</div>
 		<el-main>
 			<router-view />

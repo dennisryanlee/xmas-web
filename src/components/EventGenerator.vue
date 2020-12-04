@@ -20,7 +20,7 @@
 						</el-col>
 						<el-col class="line" :span="6">ne donnera pas à</el-col>
 						<el-col :span="7">
-							<el-select v-model="exception.receiverId" multiple filterable :loading="loading">
+							<el-select v-model="exception.receiverIds" multiple filterable :loading="loading">
 								<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
 							</el-select>
 						</el-col>
@@ -59,10 +59,18 @@ export default {
 	},
 	methods: {
 		onSubmit() {
-			console.log('submit!');
+			axios.post('http://localhost:5000/v1/xmas/events', { event: this.event })
+				.then(res => {
+					this.$notify({ title: 'Succès', message: "Un nouveau tirage au sort a été créé", type: 'success' });
+					this.$router.push({ name: 'Home' });
+				})
+				.catch(err => {
+					this.$notify({ title: 'Erreur', message: "Oups, quelque chose n'a pas fonctionné", type: 'error' });
+					console.log('ERROR: EventGenerator.vue#function - Error while getting users:', err);
+				})
 		},
 		addException() {
-			this.event.exceptions.push({ senderId: null, receiverId: null })
+			this.event.exceptions.push({ senderId: null, receiverIds: [] })
 		},
 		removeException(index) {
 			this.event.exceptions.splice(index, 1);
@@ -86,7 +94,7 @@ export default {
 
 <style scoped>
 .event-generator {
-	max-width: 70%;
+	/* max-width: 70%; */
 	border: 1px solid #ebebeb;
 	border-radius: 4px;
 	transition: 0.2s;
