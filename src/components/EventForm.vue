@@ -45,7 +45,7 @@
 import axios from 'axios'
 
 export default {
-	name: 'EventGenerator',
+	name: 'EventForm',
 	data() {
 		return {
 			event: {
@@ -67,7 +67,7 @@ export default {
 				})
 				.catch(err => {
 					this.$notify({ title: 'Erreur', message: "Oups, quelque chose n'a pas fonctionné", type: 'error' });
-					console.log('ERROR: EventGenerator.vue#function - Error while getting users:', err);
+					console.log('ERROR: EventForm.vue#function - Error while getting users:', err);
 				})
 		},
 		addException() {
@@ -87,7 +87,7 @@ export default {
 					if (event) this.event = event;
 				})
 				.catch(err => {
-					console.log('ERROR: EventGenerator.vue#function - Error while getting users:', err);
+					console.log('ERROR: EventForm.vue#function - Error while getting users:', err);
 				})
 		}
 
@@ -100,7 +100,7 @@ export default {
 				})
 			})
 			.catch(err => {
-				console.log('ERROR: EventGenerator.vue#function - Error while getting users:', err);
+				console.log('ERROR: EventForm.vue#function - Error while getting users:', err);
 			})
 
 		setTimeout(() => { this.loaded = true; }, 200);

@@ -1,19 +1,19 @@
 <template>
 	<el-row type="flex" justify="center">
 		<el-col type="flex" :span="16">
-			<EventGenerator />
+			<EventForm />
 		</el-col>
 	</el-row>
 </template>
 
 <script>
-import EventGenerator from '@/components/EventGenerator.vue'
+import EventForm from '@/components/EventForm.vue'
 import axios from 'axios'
 
 export default {
 	name: 'Event',
 	components: {
-		EventGenerator
+		EventForm
 	},
 	data() {
 		return {
