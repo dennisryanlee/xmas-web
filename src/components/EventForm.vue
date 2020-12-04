@@ -1,5 +1,5 @@
 <template>
-	<div v-if="loaded" class="event-generator">
+	<div v-if="loaded" class="event-form">
 		<h3>Nouveau tirage au sort</h3>
 		<el-form ref="form" :model="event" label-width="120px" label-position="right">
 			<el-form-item label="Nom:">
@@ -109,8 +109,7 @@ export default {
 </script>
 
 <style scoped>
-.event-generator {
-	/* max-width: 70%; */
+.event-form {
 	border: 1px solid #ebebeb;
 	border-radius: 4px;
 	transition: 0.2s;
