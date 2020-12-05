@@ -1,14 +1,10 @@
 <template>
 	<div id="app">
 		<div id="nav">
-			<router-link to="/">Accueil</router-link>
-			-
-			<router-link to="/events">Evénements</router-link>
-			<span v-if="!isAuthenticated">
-				|
-				<router-link to="/login">Login</router-link>
-			</span>
 			<span v-if="isAuthenticated">
+				<router-link to="/">Accueil</router-link>
+				|
+				<router-link to="/events">Evénements</router-link>
 				|
 				<a href="#" @click.prevent="onLogout">Logout</a>
 			</span>

@@ -4,7 +4,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import createHttp from "@/services/http";
 import SenderDraws from '@/components/SenderDraws.vue'
 
 export default {
@@ -20,9 +20,8 @@ export default {
 	mounted() {
 		let { userId = null } = this.$route.params || {};
 
-		// if (!userId) this.$notify.error({ title: 'Error', message: 'This is an error message' });
-
-		axios.get(`http://localhost:5000/v1/xmas/users/${userId}`)
+		let http = createHttp(true);
+		http.get(`/users/${userId}`)
 			.then(res => {
 				let { data: user = {} } = res || {};
 				this.user = user;

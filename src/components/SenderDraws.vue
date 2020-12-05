@@ -1,13 +1,15 @@
 <template>
 	<div class="sender-draws">
 		<div v-for="senderDraw in senderDraws" :key="senderDraw._id">
-			<div>Tu vas devoir offrir un cadeau lors de <strong>{{senderDraw.event.name}}</strong> à <strong>{{senderDraw.receiver.name}}</strong></div>
+			<div>
+				Tu vas devoir offrir un cadeau lors de <strong>{{ senderDraw.event.name }}</strong> à <strong>{{ senderDraw.receiver.name }}</strong>
+			</div>
 		</div>
 	</div>
 </template>
 
 <script>
-import axios from 'axios';
+import createHttp from "@/services/http";
 
 export default {
 	name: 'SenderDraw',
@@ -20,18 +22,13 @@ export default {
 		}
 	},
 	mounted() {
-		console.log('senderId=', this.senderId);
-
-		// if (!userId) this.$notify.error({ title: 'Error', message: 'This is an error message' });
-
-		axios.get(`http://localhost:5000/v1/xmas/draws`, { params: { senderId: this.senderId } })
+		let http = createHttp(true);
+		http.get(`http://localhost:5000/v1/xmas/draws`, { params: { senderId: this.senderId } })
 			.then(res => {
 				let { data: senderDraws = [] } = res || {};
 				this.senderDraws = senderDraws;
-
-				console.log('senderDraws=', senderDraws);
 			})
-			.catch(err => { console.log('ERROR: error while getting info', err) })
+			.catch(err => { console.log('ERROR: SenderDraws.vue#mounted - Error while getting draws:', err); })
 	}
 }
 </script>

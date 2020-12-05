@@ -1,30 +1,37 @@
 <template>
-	<UsersList :users="users" />
+	<div>Bonjour {{ user.name }} !</div>
+	<SenderDraws v-if="user._id" :senderId="user._id" />
 </template>
 
 <script>
 import createHttp from "@/services/http";
-import UsersList from '@/components/UsersList.vue'
+import SenderDraws from '@/components/SenderDraws.vue'
+
+import store from '@/store';
 
 export default {
 	name: 'Home',
 	components: {
-		UsersList
+		SenderDraws
 	},
 	data() {
 		return {
-			users: []
+			user: {}
 		}
 	},
 	mounted() {
-		let http = createHttp(true);
+		let { _id: userId = null } = this.currentUser || {};
 
-		http.get("/users")
+		let http = createHttp(true);
+		http.get(`/users/${userId}`)
 			.then(res => {
-				let { data: users = [] } = res || {};
-				this.users = users;
+				let { data: user = {} } = res || {};
+				this.user = user;
 			})
-			.catch(err => { console.log('ERROR: error while getting info', err) })
+			.catch(err => { console.log('ERROR: Home.vue#mounted - Error while getting user:', err); })
+	},
+	computed: {
+		currentUser: () => store.getters.getUser
 	}
 }
 </script>

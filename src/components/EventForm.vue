@@ -1,18 +1,20 @@
 <template>
 	<div v-if="loaded" class="event-form">
 		<h3>Nouveau tirage au sort</h3>
-		<el-form ref="form" :model="event" label-width="120px" label-position="right">
+		<el-form ref="form" :model="event" label-position="top">
 			<el-form-item label="Nom:">
 				<el-input v-model="event.name"></el-input>
 			</el-form-item>
+
 			<el-form-item label="Participants:">
-				<el-select v-model="event.users" multiple filterable :loading="loading">
+				<el-select v-model="event.users" multiple filterable :loading="loading" class="event-form__select">
 					<el-option v-for="item in options" :key="item._id" :label="item.name" :value="item._id"> </el-option>
 				</el-select>
 			</el-form-item>
+
 			<el-form-item label="Exceptions:">
 				<div v-if="event.exceptions.length > 0">
-					<div v-for="(exception, idx) in event.exceptions" :key="exception.senderId">
+					<el-row v-for="(exception, idx) in event.exceptions" :key="exception.senderId" type="flex" justify="left" :span="24" :sm="24">
 						<el-col :span="7">
 							<el-select v-model="exception.senderId" filterable :loading="loading">
 								<el-option v-for="item in options" :key="item._id" :label="item.name" :value="item._id"> </el-option>
@@ -27,12 +29,14 @@
 						<el-col class="line" :span="4">
 							<el-button type="danger" circle icon="el-icon-delete" @click="removeException(idx)"></el-button>
 						</el-col>
-					</div>
+					</el-row>
 				</div>
+
 				<div>
 					<el-button type="text" icon="el-icon-edit" @click="addException">Ajouter une exception</el-button>
 				</div>
 			</el-form-item>
+
 			<el-form-item>
 				<el-button type="primary" icon="el-icon-edit" @click="onSubmit">Create</el-button>
 				<el-button>Cancel</el-button>
@@ -42,7 +46,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import createHttp from "@/services/http";
 
 export default {
 	name: 'EventForm',
@@ -60,7 +64,8 @@ export default {
 	},
 	methods: {
 		onSubmit() {
-			axios.post('http://localhost:5000/v1/xmas/events', { event: this.event })
+			let http = createHttp(true);
+			http.post('/events', { event: this.event })
 				.then(() => {
 					this.$notify({ title: 'Succès', message: "Un nouveau tirage au sort a été créé", type: 'success' });
 					this.$router.push({ name: 'Home' });
@@ -81,7 +86,8 @@ export default {
 		let { eventId = null } = this.$route.params || {};
 
 		if (eventId && eventId !== 'new') {
-			axios.get(`http://localhost:5000/v1/xmas/events/${eventId}`)
+			let http = createHttp(true);
+			http.get(`/events/${eventId}`)
 				.then(res => {
 					let { data: event = null } = res || {};
 					if (event) this.event = event;
@@ -91,7 +97,8 @@ export default {
 				})
 		}
 
-		axios.get('http://localhost:5000/v1/xmas/users')
+		let http = createHttp(true);
+		http.get('/users')
 			.then(res => {
 				let { data: users = [] } = res || {};
 
@@ -114,11 +121,15 @@ export default {
 	border-radius: 4px;
 	transition: 0.2s;
 	padding: 20px;
-	margin: 20px;
 }
 
-.el-select,
-.el-select .el-select__tags > span {
-	display: block;
+.event-form__select {
+	width: 100%;
+}
+</style>
+
+<style>
+.el-form--label-top .el-form-item__label {
+	width: 100%;
 }
 </style>

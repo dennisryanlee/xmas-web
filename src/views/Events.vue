@@ -9,8 +9,8 @@
 </template>
 
 <script>
+import createHttp from "@/services/http";
 import EventsList from '@/components/EventsList.vue'
-import axios from 'axios'
 
 export default {
 	name: 'Events',
@@ -28,7 +28,8 @@ export default {
 		}
 	},
 	mounted() {
-		axios.get('http://localhost:5000/v1/xmas/events')
+		let http = createHttp(true);
+		http.get('/events')
 			.then(res => {
 				let { data: events = [] } = res || {};
 				this.events = events;
