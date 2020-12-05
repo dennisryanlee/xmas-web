@@ -3,8 +3,8 @@
 </template>
 
 <script>
+import createHttp from "@/services/http";
 import UsersList from '@/components/UsersList.vue'
-import axios from 'axios'
 
 export default {
 	name: 'Home',
@@ -17,7 +17,9 @@ export default {
 		}
 	},
 	mounted() {
-		axios.get('http://localhost:5000/v1/xmas/users')
+		let http = createHttp(true);
+
+		http.get("/users")
 			.then(res => {
 				let { data: users = [] } = res || {};
 				this.users = users;
