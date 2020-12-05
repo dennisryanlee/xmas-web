@@ -8,7 +8,7 @@
 
 			<el-form-item label="Participants:">
 				<el-select v-model="event.users" multiple filterable :loading="loading" class="event-form__select">
-					<el-option v-for="item in options" :key="item._id" :label="item.name" :value="item._id"> </el-option>
+					<el-option v-for="item in users" :key="item._id" :label="item.name" :value="item._id"> </el-option>
 				</el-select>
 			</el-form-item>
 
@@ -17,13 +17,13 @@
 					<el-row v-for="(exception, idx) in event.exceptions" :key="exception.senderId" type="flex" justify="left" :span="24" :sm="24">
 						<el-col :span="7">
 							<el-select v-model="exception.senderId" filterable :loading="loading">
-								<el-option v-for="item in options" :key="item._id" :label="item.name" :value="item._id"> </el-option>
+								<el-option v-for="item in participants" :key="item._id" :label="item.name" :value="item._id"> </el-option>
 							</el-select>
 						</el-col>
 						<el-col class="line" :span="6">ne donnera pas à</el-col>
 						<el-col :span="7">
 							<el-select v-model="exception.receiverIds" multiple filterable :loading="loading">
-								<el-option v-for="item in options" :key="item._id" :label="item.name" :value="item._id"> </el-option>
+								<el-option v-for="item in participants" :key="item._id" :label="item.name" :value="item._id"> </el-option>
 							</el-select>
 						</el-col>
 						<el-col class="line" :span="4">
@@ -57,7 +57,7 @@ export default {
 				users: [],
 				exceptions: []
 			},
-			options: [],
+			users: [],
 			loading: false,
 			loaded: false
 		}
@@ -102,7 +102,7 @@ export default {
 			.then(res => {
 				let { data: users = [] } = res || {};
 
-				this.options = users.map(user => {
+				this.users = users.map(user => {
 					return { _id: `${user._id}`, name: `${user.name}` };
 				})
 			})
@@ -111,6 +111,11 @@ export default {
 			})
 
 		setTimeout(() => { this.loaded = true; }, 200);
+	},
+	computed: {
+		participants() {
+			return this.users.filter(u => this.event && this.event.users && this.event.users.find(usr => usr === u._id))
+		}
 	}
 }
 </script>
