@@ -6,15 +6,13 @@
 				|
 				<router-link to="/events">Evénements</router-link>
 				|
-				<a href="#" @click.prevent="onLogout">Logout</a>
+				<a href="#" @click.prevent="onLogout">Déconnexion</a>
 			</span>
 		</div>
-		<div class="alert alert-info" v-if="isBusy">Loading...</div>
+		<div class="alert alert-info" v-if="isBusy">Chargement...</div>
 		<div class="alert alert-danger" v-if="error">{{ error }}</div>
 
-		<el-main>
-			<router-view />
-		</el-main>
+		<router-view />
 	</div>
 </template>
 
@@ -44,5 +42,10 @@ export default {
 	text-align: center;
 	color: #2c3e50;
 	margin-top: 60px;
+	height: 100%;
+}
+
+#nav {
+	padding: 20px;
 }
 </style>
