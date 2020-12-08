@@ -1,6 +1,6 @@
 <template>
 	<div>Bonjour {{ user.name }} !</div>
-	<SenderDraws v-if="user._id" :senderId="user._id" />
+	<SenderDraws v-if="user._id" :senderId="user._id" :key="user._id" />
 </template>
 
 <script>
@@ -17,16 +17,21 @@ export default {
 			user: {}
 		}
 	},
-	mounted() {
-		let { userId = null } = this.$route.params || {};
+	methods: {
+		getUser() {
+			let { userId = null } = this.$route.params || {};
 
-		let http = createHttp(true);
-		http.get(`/users/${userId}`)
-			.then(res => {
-				let { data: user = {} } = res || {};
-				this.user = user;
-			})
-			.catch(err => { console.log('ERROR: error while getting info', err) })
+			let http = createHttp(true);
+			http.get(`/users/${userId}`)
+				.then(res => {
+					let { data: user = {} } = res || {};
+					this.user = user;
+				})
+				.catch(err => { console.log('ERROR: error while getting info', err) })
+		}
+	},
+	mounted() {
+		this.getUser();
 	}
 }
 </script>

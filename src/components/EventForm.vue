@@ -3,38 +3,38 @@
 		<h3>Nouveau tirage au sort</h3>
 		<el-form ref="form" :model="event" label-position="top">
 			<el-form-item label="Nom:">
-				<el-input v-model="event.name" placeholder="hello"></el-input>
+				<el-input :disabled="formDisabled" v-model="event.name" placeholder="Nom de l'évenement"></el-input>
 			</el-form-item>
 
 			<el-form-item label="Participants:">
-				<MultiSelect v-model="event.users" :options="users" optionValue="_id" optionLabel="name" placeholder="Participants" display="chip" />
+				<MultiSelect :disabled="formDisabled" v-model="event.users" :options="users" optionValue="_id" optionLabel="name" placeholder="Participants" display="chip" />
 			</el-form-item>
 
 			<el-form-item label="Exceptions:">
 				<div v-if="event.exceptions.length > 0">
 					<el-row v-for="(exception, idx) in event.exceptions" :key="exception.senderId" type="flex" justify="left" :span="24" :sm="24">
 						<el-col :span="7">
-							<el-select v-model="exception.senderId" filterable @visible-change="getParticipants">
+							<el-select :disabled="formDisabled" v-model="exception.senderId" filterable @visible-change="getParticipants">
 								<el-option v-for="item in participants" :key="item._id" :label="item.name" :value="item._id"> </el-option>
 							</el-select>
 						</el-col>
 						<el-col class="line" :span="6">ne donnera pas à</el-col>
 						<el-col :span="7">
-							<MultiSelect v-model="exception.receiverIds" :options="participants" @before-show="getParticipants" :filter="true" optionValue="_id" optionLabel="name" placeholder="Participants" display="chip" />
+							<MultiSelect :disabled="formDisabled" v-model="exception.receiverIds" :options="participants" @before-show="getParticipants" :filter="true" optionValue="_id" optionLabel="name" placeholder="Participants" display="chip" />
 						</el-col>
 						<el-col class="line" :span="4">
-							<el-button type="danger" circle icon="el-icon-delete" @click="removeException(idx)"></el-button>
+							<el-button :disabled="formDisabled" type="danger" circle icon="el-icon-delete" @click="removeException(idx)"></el-button>
 						</el-col>
 					</el-row>
 				</div>
 
 				<div>
-					<el-button type="text" icon="el-icon-edit" @click="addException">Ajouter une exception</el-button>
+					<el-button :disabled="formDisabled" type="text" icon="el-icon-edit" @click="addException">Ajouter une exception</el-button>
 				</div>
 			</el-form-item>
 
 			<el-form-item>
-				<el-button type="primary" icon="el-icon-magic-stick" @click="onSubmit">{{ buttonLabel }}</el-button>
+				<el-button :disabled="formDisabled" type="primary" icon="el-icon-magic-stick" @click="onSubmit">{{ buttonLabel }}</el-button>
 			</el-form-item>
 		</el-form>
 	</div>
@@ -60,7 +60,8 @@ export default {
 			loading: false,
 			loaded: false,
 			buttonLabel: 'Créer',
-			participants: []
+			participants: [],
+			formDisabled: false
 		}
 	},
 	methods: {
@@ -105,6 +106,7 @@ export default {
 
 		if (eventId && eventId !== 'new') {
 			this.buttonLabel = 'Modifier';
+			this.formDisabled = true;
 
 			let http = createHttp(true);
 			http.get(`/events/${eventId}`)

@@ -2,7 +2,7 @@
 	<div class="sender-draws">
 		<div v-for="senderDraw in senderDraws" :key="senderDraw._id">
 			<div>
-				Tu vas devoir offrir un cadeau lors de <strong>{{ senderDraw.event.name }}</strong> à <strong>{{ senderDraw.receiver.name }}</strong>
+				Tu vas devoir offrir un cadeau lors de <strong>{{ senderDraw.event.name }}</strong> à <router-link :key="$route.fullPath" :to="{ name: 'User', params: { userId: senderDraw.receiver._id } }">{{ senderDraw.receiver.name }}</router-link>
 			</div>
 		</div>
 	</div>
@@ -23,7 +23,7 @@ export default {
 	},
 	mounted() {
 		let http = createHttp(true);
-		http.get(`http://localhost:5000/v1/xmas/draws`, { params: { senderId: this.senderId } })
+		http.get('/draws', { params: { senderId: this.senderId } })
 			.then(res => {
 				let { data: senderDraws = [] } = res || {};
 				this.senderDraws = senderDraws;

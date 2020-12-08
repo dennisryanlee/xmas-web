@@ -1,18 +1,39 @@
 <template>
 	<div>Bonjour {{ user.name }} !</div>
+
+	<br />
+	<br />
+	<br />
+
+	<div>Santa Secret:</div>
+	<br />
 	<SenderDraws v-if="user._id" :senderId="user._id" />
+
+	<br />
+	<br />
+	<br />
+
+	<div>Tes souhaits:</div>
+	<br />
+	<WishesList v-if="user._id" />
+
+	<br />
+	<br />
+	<br />
 </template>
 
 <script>
 import createHttp from "@/services/http";
-import SenderDraws from '@/components/SenderDraws.vue'
+import SenderDraws from '@/components/SenderDraws.vue';
+import WishesList from '@/components/WishesList.vue';
 
 import store from '@/store';
 
 export default {
 	name: 'Home',
 	components: {
-		SenderDraws
+		SenderDraws,
+		WishesList
 	},
 	data() {
 		return {

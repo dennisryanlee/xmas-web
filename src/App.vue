@@ -12,7 +12,7 @@
 		<div class="alert alert-info" v-if="isBusy">Chargement...</div>
 		<div class="alert alert-danger" v-if="error">{{ error }}</div>
 
-		<router-view />
+		<router-view :key="$route.path"/>
 	</div>
 </template>
 
