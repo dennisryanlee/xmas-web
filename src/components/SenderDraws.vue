@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import createHttp from "@/services/http";
+import fetchApi from "@/services/http";
 
 export default {
 	name: 'SenderDraw',
@@ -21,14 +21,14 @@ export default {
 			senderDraws: []
 		}
 	},
-	mounted() {
-		let http = createHttp(true);
-		http.get('/draws', { params: { senderId: this.senderId } })
-			.then(res => {
-				let { data: senderDraws = [] } = res || {};
-				this.senderDraws = senderDraws;
-			})
-			.catch(err => { console.log('ERROR: SenderDraws.vue#mounted - Error while getting draws:', err); })
+	methods: {
+		async getSenderDraws(senderId) {
+			let { data: senderDraws = [] } = await fetchApi().get('/draws', { params: { senderId: senderId } });
+			return senderDraws;
+		}
+	},
+	async mounted() {
+		this.senderDraws = await this.getSenderDraws(this.senderId);
 	}
 }
 </script>

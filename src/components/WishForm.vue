@@ -16,13 +16,14 @@
 </template>
 
 <script>
-import createHttp from "@/services/http";
+import fetchApi from "@/services/http";
 
 export default {
 	name: 'WishForm',
 	props: {
 		wishId: String,
-		editWish: Object
+		editWish: Object,
+		afterEdit: Function
 	},
 	data() {
 		return {
@@ -32,34 +33,21 @@ export default {
 		}
 	},
 	methods: {
-		updateWish() {
-			console.log('update', this.wish._id);
-			let http = createHttp(true);
-			http.put(`/wishes/${this.wish._id}`, this.wish)
-				.then(() => {
-					console.log('INFO: WishesForm.vue#updateWish - OK');
-				})
-				.catch(err => {
-					console.log('ERROR: WishesList.vue#updateWish - Error while getting wishes:', err);
-				})
+		async updateWish(wishId, payload) {
+			await fetchApi().put(`/wishes/${wishId}`, payload)
+			this.$emit('after-edit');
 		},
-		createWish() {
-			let http = createHttp(true);
-			http.post('/wishes', this.wish, { params: { userId: '5fc7ab9f4da3f231abe02786' } })
-				.then(() => {
-					console.log('INFO: WishesForm.vue#createWish - OK');
-				})
-				.catch(err => {
-					console.log('ERROR: WishesList.vue#createWish - Error while getting wishes:', err);
-				})
+		async createWish(userId, payload) {
+			await fetchApi().post('/wishes', payload, { params: { userId: userId } })
+			this.$emit('after-edit');
 		},
-		onSubmit() {
-			if (this.wish && this.wish._id) this.updateWish()
-			else this.createWish()
+		async onSubmit() {
+			if (this.wish && this.wish._id) await this.updateWish(this.wish._id, this.wish)
+			else {
+				await this.createWish('5fc7ab9f4da3f231abe02786', this.wish)
+				this.wish = {};
+			}
 		}
-	},
-	mounted() {
-
 	}
 }
 </script>

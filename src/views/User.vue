@@ -4,7 +4,7 @@
 </template>
 
 <script>
-import createHttp from "@/services/http";
+import fetchApi from "@/services/http";
 import SenderDraws from '@/components/SenderDraws.vue'
 
 export default {
@@ -18,20 +18,14 @@ export default {
 		}
 	},
 	methods: {
-		getUser() {
-			let { userId = null } = this.$route.params || {};
-
-			let http = createHttp(true);
-			http.get(`/users/${userId}`)
-				.then(res => {
-					let { data: user = {} } = res || {};
-					this.user = user;
-				})
-				.catch(err => { console.log('ERROR: error while getting info', err) })
+		async getUser(userId) {
+			let { data: user = {} } = fetchApi().get(`/users/${userId}`)
+			return user;
 		}
 	},
-	mounted() {
-		this.getUser();
+	async mounted() {
+		let { userId = null } = this.$route.params || {};
+		this.user = await this.getUser(userId);
 	}
 }
 </script>

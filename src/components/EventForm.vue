@@ -14,13 +14,13 @@
 				<div v-if="event.exceptions.length > 0">
 					<el-row v-for="(exception, idx) in event.exceptions" :key="exception.senderId" type="flex" justify="left" :span="24" :sm="24">
 						<el-col :span="7">
-							<el-select :disabled="formDisabled" v-model="exception.senderId" filterable @visible-change="getParticipants">
+							<el-select :disabled="formDisabled" v-model="exception.senderId" filterable @visible-change="setParticipants">
 								<el-option v-for="item in participants" :key="item._id" :label="item.name" :value="item._id"> </el-option>
 							</el-select>
 						</el-col>
 						<el-col class="line" :span="6">ne donnera pas à</el-col>
 						<el-col :span="7">
-							<MultiSelect :disabled="formDisabled" v-model="exception.receiverIds" :options="participants" @before-show="getParticipants" :filter="true" optionValue="_id" optionLabel="name" placeholder="Participants" display="chip" />
+							<MultiSelect :disabled="formDisabled" v-model="exception.receiverIds" :options="participants" @before-show="setParticipants" :filter="true" optionValue="_id" optionLabel="name" placeholder="Participants" display="chip" />
 						</el-col>
 						<el-col class="line" :span="4">
 							<el-button :disabled="formDisabled" type="danger" circle icon="el-icon-delete" @click="removeException(idx)"></el-button>
@@ -42,7 +42,7 @@
 
 <script>
 import MultiSelect from 'primevue/multiselect';
-import createHttp from "@/services/http";
+import fetchApi from "@/services/http";
 
 export default {
 	name: 'EventForm',
@@ -65,62 +65,52 @@ export default {
 		}
 	},
 	methods: {
-		getParticipants() {
-			this.participants = this.users.filter(u => this.event && this.event.users && this.event.users.find(usr => usr === u._id))
+		async onSubmit() {
+			await this.createEvent(this.event);
+			this.$notify({ title: 'Succès', message: "Un nouveau tirage au sort a été créé", type: 'success' });
+			this.$router.push({ name: 'Home' });
+		},
+		async getParticipants() {
+			return this.users.filter(u => this.event && this.event.users && this.event.users.find(usr => usr === u._id));
+		},
+		async setParticipants() {
+			this.participants = await this.getParticipants();
+		},
+		async createEvent(payload) {
+			await fetchApi().post('/events', { event: payload });
 			return true;
 		},
-		onSubmit() {
-			let http = createHttp(true);
-			http.post('/events', { event: this.event })
-				.then(() => {
-					this.$notify({ title: 'Succès', message: "Un nouveau tirage au sort a été créé", type: 'success' });
-					this.$router.push({ name: 'Home' });
-				})
-				.catch(err => {
-					this.$notify({ title: 'Erreur', message: "Oups, quelque chose n'a pas fonctionné", type: 'error' });
-					console.log('ERROR: EventForm.vue#function - Error while getting users:', err);
-				})
+		async getEvent(eventId) {
+			let { data: event = null } = await fetchApi().get(`/events/${eventId}`);
+			return event;
+		},
+		async getUsers() {
+			let { data: users = [] } = await fetchApi().get('/users');
+			return users.map(user => { return { _id: `${user._id}`, name: `${user.name}` } });
 		},
 		addException() {
 			this.event.exceptions.push({ senderId: null, receiverIds: [] })
 		},
 		removeException(index) {
 			this.event.exceptions.splice(index, 1);
-		}
+		},
 	},
-	mounted() {
+	async mounted() {
 		let { eventId = null } = this.$route.params || {};
 
-		let http = createHttp(true);
-		http.get('/users')
-			.then(res => {
-				let { data: users = [] } = res || {};
-
-				this.users = users.map(user => {
-					return { _id: `${user._id}`, name: `${user.name}` };
-				})
-			})
-			.catch(err => {
-				console.log('ERROR: EventForm.vue#function - Error while getting users:', err);
-			})
+		this.users = await this.getUsers();
 
 		if (eventId && eventId !== 'new') {
 			this.buttonLabel = 'Modifier';
 			this.formDisabled = true;
 
-			let http = createHttp(true);
-			http.get(`/events/${eventId}`)
-				.then(res => {
-					let { data: event = null } = res || {};
-					if (event) this.event = event;
-					this.participants = this.users.filter(u => this.event && this.event.users && this.event.users.find(usr => usr === u._id))
-				})
-				.catch(err => {
-					console.log('ERROR: EventForm.vue#function - Error while getting users:', err);
-				})
-		}
+			this.event = await this.getEvent(eventId);
+			this.participants = await this.getParticipants();
 
-		setTimeout(() => { this.loaded = true; }, 600);
+			this.loaded = true;
+		} else {
+			this.loaded = true;
+		}
 	}
 }
 </script>

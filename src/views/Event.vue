@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import createHttp from "@/services/http";
+import fetchApi from "@/services/http";
 import EventForm from '@/components/EventForm.vue'
 
 export default {
@@ -21,14 +21,14 @@ export default {
 			eventId: null
 		}
 	},
-	mounted() {
-		let http = createHttp(true);
-		http.get('/users')
-			.then(res => {
-				let { data: users = [] } = res || {};
-				this.users = users;
-			})
-			.catch(err => { console.log('ERROR: error while getting info', err) })
+	methods: {
+		async getUsers() {
+			let { data: users = [] } = await fetchApi().get('/users');
+			return users;
+		}
+	},
+	async mounted() {
+		this.users = await this.getUsers();
 	}
 }
 </script>

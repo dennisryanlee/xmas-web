@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import createHttp from "@/services/http";
+import fetchApi from "@/services/http";
 import SenderDraws from '@/components/SenderDraws.vue';
 import WishesList from '@/components/WishesList.vue';
 
@@ -40,20 +40,19 @@ export default {
 			user: {}
 		}
 	},
-	mounted() {
-		let { _id: userId = null } = this.currentUser || {};
-
-		let http = createHttp(true);
-		http.get(`/users/${userId}`)
-			.then(res => {
-				let { data: user = {} } = res || {};
-				this.user = user;
-			})
-			.catch(err => { console.log('ERROR: Home.vue#mounted - Error while getting user:', err); })
+	methods: {
+		async getUser(userId) {
+			let { data: user = null } = await fetchApi().get(`/users/${userId}`);
+			return user;
+		}
 	},
 	computed: {
 		currentUser: () => store.getters.getUser
-	}
+	},
+	async mounted() {
+		let { _id: userId = null } = this.currentUser || {};
+		this.user = await this.getUser(userId);
+	},
 }
 </script>
 

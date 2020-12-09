@@ -1,5 +1,5 @@
 <template>
-	<el-button type="primary" icon="el-icon-edit" @click="createEvent">Nouveau</el-button>
+	<el-button type="primary" icon="el-icon-edit" @click="goToCreateEvent">Nouveau</el-button>
 
 	<el-row type="flex" justify="center">
 		<el-col type="flex" :span="16">
@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import createHttp from "@/services/http";
+import fetchApi from "@/services/http";
 import EventsList from '@/components/EventsList.vue'
 
 export default {
@@ -23,20 +23,16 @@ export default {
 		}
 	},
 	methods: {
-		createEvent() {
+		goToCreateEvent() {
 			this.$router.push({ name: 'Event', params: { eventId: 'new' } });
+		},
+		async getEvents() {
+			let { data: events = [] } = await fetchApi().get('/events')
+			return events;
 		}
 	},
-	mounted() {
-		let http = createHttp(true);
-		http.get('/events')
-			.then(res => {
-				let { data: events = [] } = res || {};
-				this.events = events;
-			})
-			.catch(err => {
-				console.log('ERROR: Events.vue#mounted - Error while getting events:', err);
-			})
+	async mounted() {
+		this.events = await this.getEvents();
 	}
 }
 </script>

@@ -1,5 +1,5 @@
 import { createStore } from 'vuex';
-import createHttp from "@/services/http";
+import fetchApi from "@/services/http";
 import router from "@/router";
 
 export default createStore({
@@ -43,8 +43,8 @@ export default createStore({
 			try {
 				commit("setBusy");
 				commit("clearError");
-				const http = createHttp(false); // unsecured
-				const result = await http.post("/login", model);
+
+				const result = await fetchApi(false).post("/login", model);
 
 				if (result.data.auth.token) {
 					commit("setToken", result.data.auth);

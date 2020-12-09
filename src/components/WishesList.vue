@@ -7,12 +7,13 @@
 						<el-col class="wish-title" :span="10" type="flex" align="start">
 							<div>{{ wish.title }} - {{ wish.price }}</div>
 						</el-col>
-						<el-col :span="2"><el-button type="primary" @click="editItem(index)" circle icon="el-icon-edit"></el-button></el-col>
+						<el-col :span="1"><el-button type="primary" @click="editItem(index)" circle icon="el-icon-edit"></el-button></el-col>
+						<el-col :span="1"><el-button type="danger" @click="deleteItem(index)" circle icon="el-icon-delete"></el-button></el-col>
 					</el-row>
 
-					<WishForm v-if="index === wishEdit" :editWish="wish" />
+					<WishForm v-if="index === wishEdit" :editWish="wish" @afterEdit="afterEdit" />
 				</div>
-				<WishForm />
+				<WishForm @afterEdit="afterEdit" />
 			</el-col>
 		</el-row>
 
@@ -21,7 +22,7 @@
 </template>
 
 <script>
-import createHttp from "@/services/http";
+import fetchApi from "@/services/http";
 import WishForm from '@/components/WishForm.vue';
 
 export default {
@@ -39,18 +40,26 @@ export default {
 	methods: {
 		editItem(index) {
 			this.wishEdit = index;
+		},
+		async deleteWish(wishId) {
+			await fetchApi().delete(`/wishes/${wishId}`);
+			return true;
+		},
+		async getWishes() {
+			let { data: wishes = [] } = await fetchApi().get('/wishes', { params: { userId: '5fc7ab9f4da3f231abe02786' } });
+			return wishes;
+		},
+		async deleteItem(index) {
+			await this.deleteWish(this.wishes[index]._id);
+			this.wishes = await this.getWishes();
+		},
+		async afterEdit() {
+			this.wishEdit = null;
+			this.wishes = await this.getWishes();
 		}
 	},
-	mounted() {
-		let http = createHttp(true);
-		http.get('/wishes', { params: { userId: '5fc7ab9f4da3f231abe02786' } })
-			.then(res => {
-				let { data: wishes = [] } = res || {};
-				this.wishes = wishes;
-			})
-			.catch(err => {
-				console.log('ERROR: WishesList.vue#mounted - Error while getting wishes:', err);
-			})
+	async mounted() {
+		this.wishes = await this.getWishes();
 	}
 }
 </script>

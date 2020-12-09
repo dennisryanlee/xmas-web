@@ -2,7 +2,7 @@ import axios from "axios";
 import store from "@/store";
 
 
-export default function createHttp(secured = true) {
+export default function fetchApi(secured = true) {
 	if (secured) {
 		return axios.create({
 			baseURL: process.env.VUE_APP_GOHUB_API_URL || 'none',
