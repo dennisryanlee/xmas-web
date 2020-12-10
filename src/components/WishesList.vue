@@ -11,9 +11,9 @@
 						<el-col :span="1"><el-button type="danger" @click="deleteItem(index)" circle icon="el-icon-delete"></el-button></el-col>
 					</el-row>
 
-					<WishForm v-if="index === wishEdit" :editWish="wish" @afterEdit="afterEdit" />
+					<WishForm v-if="index === wishEdit" :userId="userId" :editWish="wish" @afterEdit="afterEdit" />
 				</div>
-				<WishForm @afterEdit="afterEdit" />
+				<WishForm :userId="userId" @afterEdit="afterEdit" />
 			</el-col>
 		</el-row>
 
@@ -30,6 +30,9 @@ export default {
 	components: {
 		WishForm
 	},
+	props: {
+		userId: String
+	},
 	data() {
 		return {
 			wishes: [],
@@ -45,21 +48,21 @@ export default {
 			await fetchApi().delete(`/wishes/${wishId}`);
 			return true;
 		},
-		async getWishes() {
-			let { data: wishes = [] } = await fetchApi().get('/wishes', { params: { userId: '5fc7ab9f4da3f231abe02786' } });
+		async getWishes(userId) {
+			let { data: wishes = [] } = await fetchApi().get(`/users/${userId}/wishes`);
 			return wishes;
 		},
 		async deleteItem(index) {
 			await this.deleteWish(this.wishes[index]._id);
-			this.wishes = await this.getWishes();
+			this.wishes = await this.getWishes(this.userId);
 		},
 		async afterEdit() {
 			this.wishEdit = null;
-			this.wishes = await this.getWishes();
+			this.wishes = await this.getWishes(this.userId);
 		}
 	},
 	async mounted() {
-		this.wishes = await this.getWishes();
+		this.wishes = await this.getWishes(this.userId);
 	}
 }
 </script>

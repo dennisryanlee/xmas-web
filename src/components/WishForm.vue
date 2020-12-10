@@ -23,7 +23,8 @@ export default {
 	props: {
 		wishId: String,
 		editWish: Object,
-		afterEdit: Function
+		afterEdit: Function,
+		userId: String
 	},
 	data() {
 		return {
@@ -38,13 +39,13 @@ export default {
 			this.$emit('after-edit');
 		},
 		async createWish(userId, payload) {
-			await fetchApi().post('/wishes', payload, { params: { userId: userId } })
+			await fetchApi().post(`/users/${userId}/wishes`, payload)
 			this.$emit('after-edit');
 		},
 		async onSubmit() {
 			if (this.wish && this.wish._id) await this.updateWish(this.wish._id, this.wish)
 			else {
-				await this.createWish('5fc7ab9f4da3f231abe02786', this.wish)
+				await this.createWish(this.userId, this.wish)
 				this.wish = {};
 			}
 		}

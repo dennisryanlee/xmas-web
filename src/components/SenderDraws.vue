@@ -2,7 +2,7 @@
 	<div class="sender-draws">
 		<div v-for="senderDraw in senderDraws" :key="senderDraw._id">
 			<div>
-				Tu vas devoir offrir un cadeau lors de <strong>{{ senderDraw.event.name }}</strong> à <router-link :key="$route.fullPath" :to="{ name: 'User', params: { userId: senderDraw.receiver._id } }">{{ senderDraw.receiver.name }}</router-link>
+				{{ senderDraw.sender.name }} va devoir offrir un cadeau lors de <strong>{{ senderDraw.event.name }}</strong> à <router-link :key="$route.fullPath" :to="{ name: 'User', params: { userId: senderDraw.receiver._id } }">{{ senderDraw.receiver.name }}</router-link>
 			</div>
 		</div>
 	</div>

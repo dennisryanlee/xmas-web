@@ -15,7 +15,7 @@
 
 	<div>Tes souhaits:</div>
 	<br />
-	<WishesList v-if="user._id" />
+	<WishesList v-if="user._id" :userId="user._id"/>
 
 	<br />
 	<br />

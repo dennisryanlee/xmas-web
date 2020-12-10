@@ -10,7 +10,9 @@
 
 <script>
 import fetchApi from "@/services/http";
-import EventsList from '@/components/EventsList.vue'
+import EventsList from '@/components/EventsList.vue';
+
+import store from '@/store';
 
 export default {
 	name: 'Events',
@@ -26,13 +28,17 @@ export default {
 		goToCreateEvent() {
 			this.$router.push({ name: 'Event', params: { eventId: 'new' } });
 		},
-		async getEvents() {
-			let { data: events = [] } = await fetchApi().get('/events')
+		async getEvents(userId) {
+			let { data: events = [] } = await fetchApi().get(`/users/${userId}/events`)
 			return events;
 		}
 	},
+	computed: {
+		currentUser: () => store.getters.getUser
+	},
 	async mounted() {
-		this.events = await this.getEvents();
+		let { _id: userId = null } = this.currentUser || {};
+		this.events = await this.getEvents(userId);
 	}
 }
 </script>
