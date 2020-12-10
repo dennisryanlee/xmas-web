@@ -1,19 +1,50 @@
 <template>
 	<div class="wishes-list">
 		<el-row type="flex" justify="center" align="center">
-			<el-col :span="12">
+			<el-col>
 				<div v-for="(wish, index) in wishes" :key="wish._id">
-					<el-row v-if="index !== wishEdit" type="flex" justify="center">
-						<el-col class="wish-title" :span="10" type="flex" align="start">
-							<div>{{ wish.title }} - {{ wish.price }}</div>
-						</el-col>
-						<el-col :span="1"><el-button type="primary" @click="editItem(index)" circle icon="el-icon-edit"></el-button></el-col>
-						<el-col :span="1"><el-button type="danger" @click="deleteItem(index)" circle icon="el-icon-delete"></el-button></el-col>
-					</el-row>
+					<el-card v-if="index !== wishEdit" class="box-card" shadow="never">
+						<template #header>
+							<el-row type="flex" align="space-between" justify="space-between" class="clearfix">
+								<el-col type="flex" align="start">
+									<span>{{ wish.title }}</span>
+								</el-col>
+								<el-col type="flex" align="end">
+									<el-row type="flex" align="end">
+										<el-col>
+											<el-button type="text" v-if="wish.emitter._id === currentUser._id" @click="editItem(index)" icon="el-icon-edit">Modifier</el-button>
+											<el-button type="text" v-if="wish.emitter._id === currentUser._id" @click="deleteItem(index)" icon="el-icon-delete" class="wishes-list__card-button--delete"></el-button>
+										</el-col>
+									</el-row>
+								</el-col>
+							</el-row>
+						</template>
+						<el-row class="wishes-list__card-content">
+							<el-col type="flex">
+								<el-row type="flex" v-for="(link, index) in wish.links" :key="index" style="text-align: start; word-break: break-word">
+									<el-link type="primary" :href="link.url" target="_blank">{{ link.title }}</el-link>
+								</el-row>
+							</el-col>
+						</el-row>
+						<el-row type="flex" justify="space-between" align="end">
+							<el-col align="start">
+								<el-tag type="info">Prix: {{ wish.price }}€</el-tag>
+							</el-col>
 
-					<WishForm v-if="index === wishEdit" :userId="userId" :editWish="wish" @afterEdit="afterEdit" />
+							<el-col align="end">
+								<el-tag>{{ currentUser._id === wish.emitter._id ? "Ton idée" : `L'idée de ${wish.emitter.name}` }}</el-tag>
+							</el-col>
+						</el-row>
+					</el-card>
+					<div v-if="index === wishEdit">
+						<WishForm :userId="userId" :editWish="wish" @afterEdit="afterEdit" />
+					</div>
 				</div>
-				<WishForm :userId="userId" @afterEdit="afterEdit" />
+
+				<el-button v-if="!addNewWish" type="text" @click="addItem()" icon="el-icon-edit">Ajouter</el-button>
+				<div v-if="addNewWish">
+					<WishForm :userId="userId" @afterEdit="afterEdit" />
+				</div>
 			</el-col>
 		</el-row>
 
@@ -24,6 +55,8 @@
 <script>
 import fetchApi from "@/services/http";
 import WishForm from '@/components/WishForm.vue';
+
+import store from '@/store';
 
 export default {
 	name: 'WishesList',
@@ -37,12 +70,16 @@ export default {
 		return {
 			wishes: [],
 			edit: false,
-			wishEdit: null
+			wishEdit: null,
+			addNewWish: false
 		}
 	},
 	methods: {
 		editItem(index) {
 			this.wishEdit = index;
+		},
+		addItem() {
+			this.addNewWish = !this.addNewWish;
 		},
 		async deleteWish(wishId) {
 			await fetchApi().delete(`/wishes/${wishId}`);
@@ -58,8 +95,12 @@ export default {
 		},
 		async afterEdit() {
 			this.wishEdit = null;
+			this.addNewWish = false;
 			this.wishes = await this.getWishes(this.userId);
 		}
+	},
+	computed: {
+		currentUser: () => store.getters.getUser
 	},
 	async mounted() {
 		this.wishes = await this.getWishes(this.userId);
@@ -86,5 +127,15 @@ a {
 	display: flex;
 	align-items: center;
 	justify-content: flex-start;
+}
+.box-card {
+	margin-bottom: 20px;
+}
+.wishes-list__card-content {
+	padding-bottom: 20px;
+}
+
+.wishes-list__card-button--delete {
+	color: #f56c6c;
 }
 </style>

@@ -26,7 +26,7 @@ export default {
 	},
 	methods: {
 		goToCreateEvent() {
-			this.$router.push({ name: 'Event', params: { eventId: 'new' } });
+			this.$router.push({ name: 'Events', query: { new: 'true' } });
 		},
 		async getEvents(userId) {
 			let { data: events = [] } = await fetchApi().get(`/users/${userId}/events`)

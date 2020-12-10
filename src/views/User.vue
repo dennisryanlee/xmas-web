@@ -1,23 +1,30 @@
 <template>
-	<div>Page de {{ user.name }}</div>
-	<br />
-	<br />
-	<SenderDraws v-if="user._id" :senderId="user._id" :key="user._id" />
+	<el-row type="flex" justify="center">
+		<el-col type="flex" :span="16">
+			<div class="user">
+				<div>Page de {{ user.name }}</div>
 
-	<br />
-	<br />
-	<br />
+				<br />
+				<el-divider></el-divider>
+				<br />
 
-	<div>Ses souhaits:</div>
-	<br />
-	<br />
-	<br />
+				<SenderDraws v-if="user._id" :senderId="user._id" :key="user._id" />
 
-	<WishesList v-if="user._id" :userId="user._id" />
+				<br />
+				<el-divider></el-divider>
+				<br />
 
-	<br />
-	<br />
-	<br />
+				<div>Sa liste de souhaits & idées</div>
+				<br />
+
+				<WishesList v-if="user._id" :userId="user._id" />
+
+				<br />
+				<br />
+				<br />
+			</div>
+		</el-col>
+	</el-row>
 </template>
 
 <script>
@@ -57,5 +64,11 @@ export default {
 	text-align: center;
 	color: #2c3e50;
 	margin-top: 60px;
+}
+.user {
+	border: 1px solid #ebebeb;
+	border-radius: 4px;
+	transition: 0.2s;
+	padding: 20px;
 }
 </style>

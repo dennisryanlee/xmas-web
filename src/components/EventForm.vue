@@ -1,9 +1,18 @@
 <template>
 	<div v-if="loaded" class="event-form">
 		<h3>Nouveau tirage au sort</h3>
+		<!-- <el-row type="flex" align="center" justify="end">
+			<el-col>
+				<router-link v-if="event._id" :to="{ name: 'Edraws', params: { eventId: event._id } }">Résultats</router-link>
+			</el-col>
+		</el-row> -->
 		<el-form ref="form" :model="event" label-position="top">
 			<el-form-item label="Nom:">
 				<el-input :disabled="formDisabled" v-model="event.name" placeholder="Nom de l'évenement"></el-input>
+			</el-form-item>
+
+			<el-form-item label="Visibilité:">
+				<el-checkbox :disabled="formDisabled" v-model="event.public">Tout le monde peut voir la liste</el-checkbox>
 			</el-form-item>
 
 			<el-form-item label="Participants:">

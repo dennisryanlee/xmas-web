@@ -7,6 +7,8 @@ import User from "@/views/User.vue";
 import Event from "@/views/Event.vue";
 import Events from "@/views/Events.vue";
 
+import NotFound from "@/views/NotFound.vue";
+
 const authGuard = (to, from, next) => {
 	if (store.getters.isAuthenticated) next();
 	else next("/login")
@@ -29,10 +31,11 @@ const routes = [
 		component: Home,
 		beforeEnter: authGuard
 	},
+	// { path: '/events', component: Events, props: true },
 	{
 		path: "/events",
 		name: "Events",
-		component: Events,
+		components: Events,
 		beforeEnter: authGuard
 	},
 	{
@@ -47,6 +50,10 @@ const routes = [
 		component: User,
 		beforeEnter: authGuard
 	},
+	{
+		path: "/:catchAll(.*)",
+		component: NotFound,
+	}
 ];
 
 const router = createRouter({
