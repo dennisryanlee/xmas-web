@@ -1,51 +1,56 @@
 <template>
 	<div v-if="loaded" class="event-form">
-		<h3>Nouveau tirage au sort</h3>
-		<!-- <el-row type="flex" align="center" justify="end">
-			<el-col>
-				<router-link v-if="event._id" :to="{ name: 'Edraws', params: { eventId: event._id } }">Résultats</router-link>
-			</el-col>
-		</el-row> -->
-		<el-form ref="form" :model="event" label-position="top">
-			<el-form-item label="Nom:">
-				<el-input :disabled="formDisabled" v-model="event.name" placeholder="Nom de l'évenement"></el-input>
-			</el-form-item>
+		<h3>Tirage au sort</h3>
 
-			<el-form-item label="Visibilité:">
-				<el-checkbox :disabled="formDisabled" v-model="event.public">Tout le monde peut voir la liste</el-checkbox>
-			</el-form-item>
+		<el-row type="flex" justify="center">
+			<el-card class="box-card" shadow="never">
+				<el-row type="flex" align="center" justify="end">
+					<el-col>
+						<router-link v-if="event._id" :to="{ name: 'Draws', params: { eventId: event._id } }">Résultats</router-link>
+					</el-col>
+				</el-row>
+				<el-form ref="form" :model="event" label-position="top">
+					<el-form-item label="Nom:">
+						<el-input :disabled="formDisabled" v-model="event.name" placeholder="Nom de l'évenement"></el-input>
+					</el-form-item>
 
-			<el-form-item label="Participants:">
-				<MultiSelect :disabled="formDisabled" v-model="event.users" :options="users" optionValue="_id" optionLabel="name" placeholder="Participants" display="chip" />
-			</el-form-item>
+					<el-form-item label="Visibilité:">
+						<el-checkbox :disabled="formDisabled" v-model="event.public">Tout le monde peut voir la liste</el-checkbox>
+					</el-form-item>
 
-			<el-form-item label="Exceptions:">
-				<div v-if="event.exceptions.length > 0">
-					<el-row v-for="(exception, idx) in event.exceptions" :key="exception.senderId" type="flex" justify="left" :span="24" :sm="24">
-						<el-col :span="7">
-							<el-select :disabled="formDisabled" v-model="exception.senderId" filterable @visible-change="setParticipants">
-								<el-option v-for="item in participants" :key="item._id" :label="item.name" :value="item._id"> </el-option>
-							</el-select>
-						</el-col>
-						<el-col class="line" :span="6">ne donnera pas à</el-col>
-						<el-col :span="7">
-							<MultiSelect :disabled="formDisabled" v-model="exception.receiverIds" :options="participants" @before-show="setParticipants" :filter="true" optionValue="_id" optionLabel="name" placeholder="Participants" display="chip" />
-						</el-col>
-						<el-col class="line" :span="4">
-							<el-button :disabled="formDisabled" type="danger" circle icon="el-icon-delete" @click="removeException(idx)"></el-button>
-						</el-col>
-					</el-row>
-				</div>
+					<el-form-item label="Participants:">
+						<MultiSelect :disabled="formDisabled" v-model="event.users" :options="users" optionValue="_id" optionLabel="name" placeholder="Participants" display="chip" />
+					</el-form-item>
 
-				<div>
-					<el-button :disabled="formDisabled" type="text" icon="el-icon-edit" @click="addException">Ajouter une exception</el-button>
-				</div>
-			</el-form-item>
+					<el-form-item label="Exceptions:">
+						<div v-if="event.exceptions.length > 0">
+							<el-row v-for="(exception, idx) in event.exceptions" :key="exception.senderId" type="flex" justify="left" :span="24" :sm="24">
+								<el-col :span="7">
+									<el-select :disabled="formDisabled" v-model="exception.senderId" filterable @visible-change="setParticipants">
+										<el-option v-for="item in participants" :key="item._id" :label="item.name" :value="item._id"> </el-option>
+									</el-select>
+								</el-col>
+								<el-col class="line" :span="6">ne donnera pas à</el-col>
+								<el-col :span="7">
+									<MultiSelect :disabled="formDisabled" v-model="exception.receiverIds" :options="participants" @before-show="setParticipants" :filter="true" optionValue="_id" optionLabel="name" placeholder="Participants" display="chip" />
+								</el-col>
+								<el-col class="line" :span="4">
+									<el-button :disabled="formDisabled" type="danger" circle icon="el-icon-delete" @click="removeException(idx)"></el-button>
+								</el-col>
+							</el-row>
+						</div>
 
-			<el-form-item>
-				<el-button :disabled="formDisabled" type="primary" icon="el-icon-magic-stick" @click="onSubmit">{{ buttonLabel }}</el-button>
-			</el-form-item>
-		</el-form>
+						<div>
+							<el-button :disabled="formDisabled" type="text" icon="el-icon-edit" @click="addException">Ajouter une exception</el-button>
+						</div>
+					</el-form-item>
+
+					<el-form-item>
+						<el-button :disabled="formDisabled" type="primary" icon="el-icon-magic-stick" @click="onSubmit">{{ buttonLabel }}</el-button>
+					</el-form-item>
+				</el-form>
+			</el-card>
+		</el-row>
 	</div>
 </template>
 
@@ -126,8 +131,6 @@ export default {
 
 <style scoped lang="scss">
 .event-form {
-	border: 1px solid #ebebeb;
-	border-radius: 4px;
 	transition: 0.2s;
 	padding: 20px;
 }
@@ -138,7 +141,7 @@ export default {
 }
 </style>
 
-<style>
+<style lang="scss" scoped>
 .el-form--label-top .el-form-item__label {
 	width: 100%;
 }

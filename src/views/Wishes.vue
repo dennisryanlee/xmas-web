@@ -2,19 +2,7 @@
 	<el-row type="flex" justify="center">
 		<el-col type="flex" :span="16">
 			<div class="user">
-				<div>Page de {{ user.name }}</div>
-
-				<br />
-				<el-divider></el-divider>
-				<br />
-
-				<SenderDraws v-if="user._id" :senderId="user._id" :key="user._id" />
-
-				<br />
-				<el-divider></el-divider>
-				<br />
-
-				<div>Sa Wishlist:</div>
+				<div>Ta wishlist</div>
 				<br />
 
 				<WishesList v-if="user._id" :userId="user._id" />
@@ -29,13 +17,11 @@
 
 <script>
 import fetchApi from "@/services/http";
-import SenderDraws from '@/components/SenderDraws.vue'
 import WishesList from '@/components/WishesList.vue'
 
 export default {
-	name: 'User',
+	name: 'Wishes',
 	components: {
-		SenderDraws,
 		WishesList
 	},
 	data() {

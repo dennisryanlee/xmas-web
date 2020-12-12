@@ -21,9 +21,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-a {
-	color: green;
-	font-size: 14px;
-	text-decoration: none;
+.el-timeline {
+	font-size: 20px;
 }
 </style>

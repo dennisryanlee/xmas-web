@@ -1,7 +1,7 @@
 <template>
 	<el-row type="flex" justify="center" align="center" v-for="senderDraw in senderDraws" :key="senderDraw._id">
-		<el-col :span="16" style="text-align: start">
-			{{ senderDraw.sender._id === this.currentUser._id ? `Tu vas` : `${senderDraw.sender.name} va` }} devoir offrir un cadeau lors de <strong>{{ senderDraw.event.name }}</strong> à <router-link :key="$route.fullPath" :to="{ name: 'User', params: { userId: senderDraw.receiver._id } }">{{ senderDraw.receiver.name }}</router-link>
+		<el-col :span="16" style="text-align: center">
+			{{ senderDraw.sender._id === this.currentUser._id ? `Tu offres` : `${senderDraw.sender.name} offre` }} un cadeau à <router-link :key="$route.fullPath" :to="{ name: 'User', params: { userId: senderDraw.receiver._id } }">{{ senderDraw.receiver.name }}</router-link> pour <strong>{{ senderDraw.event.name }}</strong> 
 		</el-col>
 	</el-row>
 </template>

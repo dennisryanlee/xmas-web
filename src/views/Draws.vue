@@ -2,7 +2,7 @@
 	<div>
 		<el-row type="flex" justify="center">
 			<el-col type="flex" :span="16" :xs="24">
-				<EventForm />
+				<EventDraws v-if="eventId" :eventId="eventId" />
 			</el-col>
 		</el-row>
 	</div>
@@ -10,12 +10,12 @@
 
 <script>
 import fetchApi from "@/services/http";
-import EventForm from '@/components/EventForm.vue';
+import EventDraws from '@/components/EventDraws.vue';
 
 export default {
-	name: 'Event',
+	name: 'Draws',
 	components: {
-		EventForm
+		EventDraws
 	},
 	data() {
 		return {

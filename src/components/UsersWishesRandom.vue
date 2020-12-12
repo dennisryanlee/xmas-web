@@ -1,9 +1,9 @@
 <template>
 	<div class="wishes-list">
 		<el-row type="flex" justify="center" align="center">
-			<el-col justify="center" align="center">
-				<div v-for="(wish, index) in wishes" :key="wish._id">
-					<el-card v-if="index !== wishEdit" class="box-card" shadow="never">
+			<el-col>
+				<div v-for="(user, index) in users" :key="user._id">
+					<el-card class="box-card" shadow="never">
 						<template #header>
 							<el-row type="flex" align="space-between" justify="space-between" class="clearfix">
 								<el-col type="flex" align="start">

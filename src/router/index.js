@@ -4,8 +4,11 @@ import store from "@/store";
 import Login from "@/views/Login.vue";
 import Home from "@/views/Home.vue";
 import User from "@/views/User.vue";
+import Users from "@/views/Users.vue";
 import Event from "@/views/Event.vue";
 import Events from "@/views/Events.vue";
+import Wishes from "@/views/Wishes.vue";
+import Draws from "@/views/Draws.vue";
 
 import NotFound from "@/views/NotFound.vue";
 
@@ -13,7 +16,6 @@ const authGuard = (to, from, next) => {
 	if (store.getters.isAuthenticated) next();
 	else next("/login")
 };
-
 
 const routes = [
 	{
@@ -35,7 +37,7 @@ const routes = [
 	{
 		path: "/events",
 		name: "Events",
-		components: Events,
+		component: Events,
 		beforeEnter: authGuard
 	},
 	{
@@ -45,9 +47,27 @@ const routes = [
 		beforeEnter: authGuard
 	},
 	{
+		path: "/events/:eventId/draws",
+		name: "Draws",
+		component: Draws,
+		beforeEnter: authGuard
+	},
+	{
+		path: "/users",
+		name: "Users",
+		component: Users,
+		beforeEnter: authGuard
+	},
+	{
 		path: "/users/:userId",
 		name: "User",
 		component: User,
+		beforeEnter: authGuard
+	},
+	{
+		path: "/users/:userId/wishes",
+		name: "Wishes",
+		component: Wishes,
 		beforeEnter: authGuard
 	},
 	{

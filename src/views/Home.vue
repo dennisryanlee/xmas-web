@@ -2,10 +2,11 @@
 	<el-row type="flex" justify="center">
 		<el-col type="flex" :span="16">
 			<div class="home">
-				<div>Bonjour {{ user.name }} !</div>
+				<h3>Bonjour {{ user.name }} !</h3>
 
 				<br />
 				<el-divider></el-divider>
+				<div>Petits rappels:</div>
 				<br />
 
 				<SenderDraws v-if="user._id" :senderId="user._id" />
@@ -14,9 +15,25 @@
 				<el-divider></el-divider>
 				<br />
 
-				<div>Ta liste de souhaits & idées</div>
+				<div>Découvre vite le résultat des tirages</div>
+
+				<el-button type="primary">Résultats des tirages</el-button>
+
 				<br />
-				<WishesList v-if="user._id" :userId="user._id" />
+				<br />
+				<br />
+
+				<div>Aide des cousins à choisir ton cadeau</div>
+
+				<el-button type="primary">Ma wishlist</el-button>
+
+				<br />
+				<br />
+				<br />
+
+				<div>Propose des idées à tes cousins</div>
+
+				<el-button type="primary">Ma wishlist</el-button>
 
 				<br />
 				<br />
@@ -29,15 +46,13 @@
 <script>
 import fetchApi from "@/services/http";
 import SenderDraws from '@/components/SenderDraws.vue';
-import WishesList from '@/components/WishesList.vue';
 
 import store from '@/store';
 
 export default {
 	name: 'Home',
 	components: {
-		SenderDraws,
-		WishesList
+		SenderDraws
 	},
 	data() {
 		return {
@@ -60,18 +75,8 @@ export default {
 }
 </script>
 
-<style>
-#app {
-	font-family: Avenir, Helvetica, Arial, sans-serif;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-	text-align: center;
-	color: #2c3e50;
-	margin-top: 60px;
-}
+<style lang="scss" scoped>
 .home {
-	border: 1px solid #ebebeb;
-	border-radius: 4px;
 	transition: 0.2s;
 	padding: 20px;
 }
