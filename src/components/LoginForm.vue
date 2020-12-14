@@ -39,7 +39,8 @@ export default {
 	border-radius: 4px;
 	transition: 0.2s;
 	padding: 20px;
-	/* margin: 20px; */
+	background-color: #FFF;
+	color: #24336b;
 }
 
 .el-select,

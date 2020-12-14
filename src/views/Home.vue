@@ -1,6 +1,6 @@
 <template>
 	<el-row type="flex" justify="center">
-		<el-col type="flex" :span="16">
+		<el-col type="flex" :span="16" :xs="24">
 			<div class="home">
 				<h3>Bonjour {{ user.name }} !</h3>
 

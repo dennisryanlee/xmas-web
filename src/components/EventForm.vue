@@ -41,12 +41,12 @@
 						</div>
 
 						<div>
-							<el-button :disabled="formDisabled" type="text" icon="el-icon-edit" @click="addException">Ajouter une exception</el-button>
+							<el-button :disabled="formDisabled" type="text" icon="el-icon-circle-plus-outline" @click="addException">Ajouter une exception</el-button>
 						</div>
 					</el-form-item>
 
 					<el-form-item>
-						<el-button :disabled="formDisabled" type="primary" icon="el-icon-magic-stick" @click="onSubmit">{{ buttonLabel }}</el-button>
+						<el-button :disabled="formDisabled" type="primary" icon="el-icon-circle-plus-outline" @click="onSubmit">{{ buttonLabel }}</el-button>
 					</el-form-item>
 				</el-form>
 			</el-card>
@@ -150,8 +150,6 @@ export default {
 	display: flex;
 	flex: 1 1 auto;
 	padding: 0 0 0 0 !important;
-	/* color: #bbb !important; */
-	/* font-size: 12px !important; */
 }
 
 .p-dropdown {
@@ -185,5 +183,9 @@ export default {
 .p-multiselect.p-multiselect-chip .p-multiselect-token {
 	max-height: 40px;
 	margin: 5px 5px 5px 1px;
+}
+
+.box-card {
+	max-width: 100%;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-	<div id="app">
+	<div id="app__container">
 		<div id="nav">
 			<span v-if="isAuthenticated">
 				<router-link to="/">Accueil</router-link>
@@ -17,6 +17,7 @@
 		<div class="alert alert-danger" v-if="error">{{ error }}</div>
 
 		<router-view :key="$route.path" />
+		<div class="wave"></div>
 	</div>
 </template>
 
@@ -40,49 +41,106 @@ export default {
 </script>
 
 <style lang="scss">
-html {
-	// background-color: #eaefff;
-	background-color: #2f344e;
-	color: #fff;
-}
 body {
-	font-size: 20px;
+	margin: 0px;
+	font-size: 1rem;
+	line-height: 1.5;
+	color: #273036;
 }
 
 #app {
-	// font-family: Avenir, Helvetica, Arial, sans-serif;
-	// font-family: "Source Sans Pro", "Trebuchet MS", "Droid Sans", sans-serif;
-	font-family: "Montserrat", sans-serif;
+	&::before {
+		z-index: -1;
+		content: "";
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		left: 0px;
+		top: 0px;
+		background: url(./assets/wave.svg) no-repeat;
+		background-color: #fff;
+		background-size: contain;
+
+		// @media only screen and (max-width: 600px) {
+		// 	display: none;
+		// }
+	}
+
+	&::after {
+		z-index: -1;
+		content: "";
+		opacity: 0.3;
+		position: absolute;
+		width: 30vw;
+		height: 165px;
+		right: 0px;
+		top: 15vw;
+		background: url(./assets/xmas-tree.svg) no-repeat;
+		background-color: transparent;
+		background-size: contain;
+
+		@media only screen and (max-width: 600px) {
+			display: none;
+		}
+	}
+}
+
+#app__container {
+	font-family: system-ui, sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	text-align: center;
-	// color: #2c3e50;
 	margin-top: 60px;
-	height: 100%;
 	&::before {
 		z-index: -1;
-		opacity: 0.1;
+		opacity: 1;
 		content: "";
 		position: absolute;
 		width: 500px;
 		height: 500px;
-		top: -180px;
-		right: 0px;
-		background: url(./assets/gifts.svg) no-repeat;
+		top: 0px;
+		left: 0px;
+
+		background: url(./assets/flocons.svg) no-repeat;
 		background-size: 500px 500px;
+
+		@media only screen and (max-width: 600px) {
+			max-width: 100%;
+		}
 	}
+
 	&::after {
 		z-index: -1;
-		content: "";
 		opacity: 0.1;
+		content: "";
 		position: absolute;
 		width: 500px;
 		height: 500px;
 		bottom: 0px;
 		left: 0px;
-		background: url(./assets/flocons.svg) no-repeat;
+
+		background: url(./assets/gifts-reverted.svg) no-repeat;
 		background-size: 500px 500px;
+
+		@media only screen and (max-width: 600px) {
+			display: none;
+		}
 	}
+
+	// &::after {
+	// 	z-index: -1;
+	// 	content: "";
+	// 	position: absolute;
+	// 	width: 100%;
+	// 	height: 500px;
+	// 	left: 0px;
+	// 	background: url(./assets/wave.svg) no-repeat;
+	// 	background-color: #fff;
+
+	// 	@media only screen and (max-width: 600px) {
+	// 		display: none;
+	// 	}
+	// }
 }
 
 #nav {

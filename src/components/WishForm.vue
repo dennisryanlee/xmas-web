@@ -40,8 +40,8 @@
 					</el-col>
 
 					<el-col align="end">
-						<el-form-item>
-							<el-checkbox v-model="wish.visible">Lui cacher</el-checkbox>
+						<el-form-item v-if="currentUser._id !== userId">
+							<el-checkbox v-model="wish.hidden">Secret pour {{username}}</el-checkbox>
 						</el-form-item>
 					</el-col>
 				</el-row>
@@ -61,7 +61,8 @@ export default {
 		wishId: String,
 		editWish: Object,
 		afterEdit: Function,
-		userId: String
+		userId: String,
+		username: String
 	},
 	data() {
 		return {
@@ -124,6 +125,6 @@ a {
 }
 
 .wish-form__card-button--save {
-	color: #67c23a;
+	color: #42b983;
 }
 </style>

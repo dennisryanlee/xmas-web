@@ -1,7 +1,13 @@
 <template>
 	<el-row type="flex" justify="center">
-		<el-col type="flex" :span="16">
+		<el-col type="flex" :span="16" :xs="24">
 			<div class="user">
+				<h3>La Famille</h3>
+				<br />
+
+				<el-divider></el-divider>
+				<br />
+
 				<UsersList />
 			</div>
 		</el-col>

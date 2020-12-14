@@ -1,8 +1,8 @@
 <template>
 	<el-row type="flex" justify="center">
-		<el-col type="flex" :span="16">
+		<el-col type="flex" :span="16" :xs="24">
 			<div class="user">
-				<div>Page de {{ user.name }}</div>
+				<h3>Page de {{ user.name }}</h3>
 
 				<br />
 				<el-divider></el-divider>
@@ -14,10 +14,10 @@
 				<el-divider></el-divider>
 				<br />
 
-				<div>Sa Wishlist:</div>
+				<div>Ses souhaits:</div>
 				<br />
 
-				<WishesList v-if="user._id" :userId="user._id" />
+				<WishesList v-if="user._id" :userId="user._id" :username="user.name" />
 
 				<br />
 				<br />

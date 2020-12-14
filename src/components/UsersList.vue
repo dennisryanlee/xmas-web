@@ -1,9 +1,5 @@
 <template>
 	<div class="users-list">
-		<h3>La Famille</h3>
-		<br />
-		<el-divider></el-divider>
-		<br />
 		<div v-for="user in users" :key="user._id">
 			<router-link :to="{ name: 'User', params: { userId: user._id } }">{{ user.name }}</router-link>
 		</div>

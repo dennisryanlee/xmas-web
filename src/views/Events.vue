@@ -1,9 +1,23 @@
 <template>
-	<el-button type="primary" icon="el-icon-edit" @click="goToCreateEvent">Nouveau</el-button>
-
 	<el-row type="flex" justify="center">
-		<el-col type="flex" :span="16">
-			<EventsList :events="events" />
+		<el-col type="flex" :span="16" :xs="24">
+			<div class="events">
+				<h3>Les Evènements</h3>
+				<br />
+				<el-divider></el-divider>
+				<br />
+
+				<el-button type="primary" icon="el-icon-circle-plus-outline" @click="goToCreateEvent">Nouveau</el-button>
+				<br />
+				<br />
+				<br />
+
+				<el-row type="flex" justify="center">
+					<el-col type="flex">
+						<EventsList :events="events" />
+					</el-col>
+				</el-row>
+			</div>
 		</el-col>
 	</el-row>
 </template>
@@ -42,3 +56,10 @@ export default {
 	}
 }
 </script>
+
+<style lang="scss" scoped>
+.events {
+	transition: 0.2s;
+	padding: 20px;
+}
+</style>

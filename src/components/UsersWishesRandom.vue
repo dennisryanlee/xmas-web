@@ -37,13 +37,13 @@
 						</el-row>
 					</el-card>
 					<div v-if="index === wishEdit">
-						<WishForm :userId="userId" :editWish="wish" @afterEdit="afterEdit" />
+						<WishForm :userId="userId" :username="username"  :editWish="wish" @afterEdit="afterEdit" />
 					</div>
 				</div>
 
-				<el-button v-if="!addNewWish" type="text" @click="addItem()" icon="el-icon-edit">Ajouter</el-button>
+				<el-button v-if="!addNewWish" type="primary" @click="addItem()" icon="el-icon-circle-plus-outline"> Ajouter</el-button>
 				<div v-if="addNewWish">
-					<WishForm :userId="userId" @afterEdit="afterEdit" />
+					<WishForm :userId="userId" :username="username"  @afterEdit="afterEdit" />
 				</div>
 			</el-col>
 		</el-row>
@@ -66,7 +66,8 @@ export default {
 		Avatar
 	},
 	props: {
-		userId: String
+		userId: String,
+		username: String
 	},
 	data() {
 		return {

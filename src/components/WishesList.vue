@@ -29,6 +29,7 @@
 						<el-row type="flex" justify="space-between" align="end">
 							<el-col align="start">
 								<el-tag type="info">Prix: {{ wish.price }}€</el-tag>
+								<el-tag v-if="wish.hidden && currentUser._id !== userId" type="danger">{{ username }} ne peut pas le voir</el-tag>
 							</el-col>
 
 							<el-col align="end">
@@ -37,13 +38,13 @@
 						</el-row>
 					</el-card>
 					<div v-if="index === wishEdit">
-						<WishForm :userId="userId" :editWish="wish" @afterEdit="afterEdit" />
+						<WishForm :userId="userId" :username="username" :editWish="wish" @afterEdit="afterEdit" />
 					</div>
 				</div>
 
-				<el-button v-if="!addNewWish" type="text" @click="addItem()" icon="el-icon-edit">Ajouter</el-button>
+				<el-button v-if="!addNewWish" type="primary" @click="addItem()" icon="el-icon-circle-plus-outline">Ajouter</el-button>
 				<div v-if="addNewWish">
-					<WishForm :userId="userId" @afterEdit="afterEdit" />
+					<WishForm :userId="userId" :username="username" @afterEdit="afterEdit" />
 				</div>
 			</el-col>
 		</el-row>
@@ -66,7 +67,8 @@ export default {
 		Avatar
 	},
 	props: {
-		userId: String
+		userId: String,
+		username: String
 	},
 	data() {
 		return {

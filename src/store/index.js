@@ -52,10 +52,10 @@ export default createStore({
 					router.push("/");
 				}
 				else {
-					commit("setError", "Authentication Failed");
+					commit("setError", "Echec d'authentication");
 				}
 			} catch {
-				commit("setError", "Failed to login");
+				commit("setError", "Echec de connexion");
 			} finally {
 				commit("clearBusy");
 			}

@@ -1,6 +1,4 @@
 <template>
-	<h3>Evènements:</h3>
-
 	<el-row type="flex" align="center" justify="center">
 		<el-timeline>
 			<el-timeline-item v-for="(event, index) in events" :key="index" :timestamp="event.when">

@@ -1,15 +1,14 @@
 <template>
 	<el-row type="flex" justify="center">
-		<el-col type="flex" :span="16">
+		<el-col type="flex" :span="16" :xs="24">
 			<div class="user">
-				<div>Ta wishlist</div>
-				<br />
-
-				<WishesList v-if="user._id" :userId="user._id" />
+				<h3>Mes souhaits</h3>
 
 				<br />
+				<el-divider></el-divider>
 				<br />
-				<br />
+
+				<WishesList v-if="user._id" :username="user.name" :userId="user._id" />
 			</div>
 		</el-col>
 	</el-row>
