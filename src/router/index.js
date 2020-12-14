@@ -2,6 +2,8 @@ import { createWebHistory, createRouter } from "vue-router";
 import store from "@/store";
 
 import Login from "@/views/Login.vue";
+import Onboarding from "@/views/Onboarding.vue";
+
 import Home from "@/views/Home.vue";
 import User from "@/views/User.vue";
 import Users from "@/views/Users.vue";
@@ -22,6 +24,15 @@ const routes = [
 		path: "/login",
 		name: "Login",
 		component: Login,
+		beforeEnter: (to, from, next) => {
+			if (store.getters.isAuthenticated) next("/")
+			next();
+		}
+	},
+	{
+		path: "/onboarding",
+		name: "Onboarding",
+		component: Onboarding,
 		beforeEnter: (to, from, next) => {
 			if (store.getters.isAuthenticated) next("/")
 			next();

@@ -14,7 +14,7 @@
 				<el-divider></el-divider>
 				<br />
 
-				<div>Ses souhaits:</div>
+				<h3>Les souhaits de {{user.name}}</h3>
 				<br />
 
 				<WishesList v-if="user._id" :userId="user._id" :username="user.name" />

@@ -9,15 +9,17 @@
 				<el-input v-model="user.password" type="password"></el-input>
 			</el-form-item>
 			<el-form-item>
-				<el-button type="primary" native-type="submit" icon="el-icon-arrow-right" @click="onSubmit">Connexion</el-button>
+				<el-button type="primary" native-type="submit" icon="el-icon-connection" @click="onSubmit">Connexion</el-button>
 			</el-form-item>
 		</el-form>
+		<el-button type="primary" icon="el-icon-thumb" @click="onboard"><strong>PREMIERE FOIS SUR LE SITE</strong></el-button>
 	</div>
 </template>
 
 <script>
 import { reactive } from "vue";
 import store from "@/store";
+import router from "@/router";
 
 export default {
 	name: 'LoginForm',
@@ -28,18 +30,23 @@ export default {
 			store.dispatch("login", user);
 		}
 
-		return { user, onSubmit }
+		function onboard() {
+			router.push({name: 'Onboarding' });
+		}
+
+		return { user, onSubmit, onboard }
 	}
 }
 </script>
 
 <style scoped>
 .login-form {
+	margin-top: -30vh;
 	border: 1px solid #ebebeb;
 	border-radius: 4px;
 	transition: 0.2s;
 	padding: 20px;
-	background-color: #FFF;
+	background-color: #fff;
 	color: #24336b;
 }
 

@@ -4,37 +4,34 @@
 			<div class="home">
 				<h3>Bonjour {{ user.name }} !</h3>
 
-				<br />
 				<el-divider></el-divider>
-				<div>Petits rappels:</div>
+				<div>Cette année:</div>
 				<br />
 
 				<SenderDraws v-if="user._id" :senderId="user._id" />
 
-				<br />
 				<el-divider></el-divider>
-				<br />
 
-				<div>Découvre vite le résultat des tirages</div>
-
-				<el-button type="primary">Résultats des tirages</el-button>
-
-				<br />
-				<br />
-				<br />
-
-				<div>Aide des cousins à choisir ton cadeau</div>
-
-				<el-button type="primary">Ma wishlist</el-button>
-
-				<br />
-				<br />
-				<br />
-
-				<div>Propose des idées à tes cousins</div>
-
-				<el-button type="primary">Ma wishlist</el-button>
-
+				<el-row type="flex" justify="space-between" align="center">
+					<el-col>
+						<h3>Découvre vite le résultat des tirages</h3>
+						<el-button class="home__button" type="primary" @click="navigate({ name: 'Events' })">
+							<strong>EVENEMENTS</strong>
+						</el-button>
+					</el-col>
+					<el-col>
+						<h3>Aide des cousins à choisir ton cadeau</h3>
+						<el-button class="home__button" type="primary" @click="navigate({ name: 'Wishes', params: { userId: currentUser._id } })">
+							<strong>MES SOUHAITS</strong>
+						</el-button>
+					</el-col>
+					<el-col>
+						<h3>Propose des idées à tes cousins</h3>
+						<el-button class="home__button" type="primary" @click="navigate({ name: 'Users' })">
+							<strong>FAMILLE</strong>
+						</el-button>
+					</el-col>
+				</el-row>
 				<br />
 				<br />
 				<br />
@@ -63,7 +60,11 @@ export default {
 		async getUser(userId) {
 			let { data: user = null } = await fetchApi().get(`/users/${userId}`);
 			return user;
+		},
+		navigate(payload) {
+			this.$router.push(payload);
 		}
+
 	},
 	computed: {
 		currentUser: () => store.getters.getUser
@@ -79,5 +80,8 @@ export default {
 .home {
 	transition: 0.2s;
 	padding: 20px;
+}
+.home__button {
+	min-width: 250px;
 }
 </style>

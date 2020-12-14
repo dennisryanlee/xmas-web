@@ -52,10 +52,31 @@ export default createStore({
 					router.push("/");
 				}
 				else {
-					commit("setError", "Echec d'authentication");
+					commit("setError", "Echec d'authentification");
 				}
 			} catch {
 				commit("setError", "Echec de connexion");
+			} finally {
+				commit("clearBusy");
+			}
+		},
+		signup: async ({ commit }, model) => {
+			try {
+				commit("setBusy");
+				commit("clearError");
+
+				const result = await fetchApi(false).post("/signup", model);
+
+				if (result.data.auth.token) {
+					commit("setToken", result.data.auth);
+					commit("setUser", result.data.user);
+					router.push("/");
+				}
+				else {
+					commit("setError", "Echec d'authentification");
+				}
+			} catch {
+				commit("setError", "Echec de reg");
 			} finally {
 				commit("clearBusy");
 			}

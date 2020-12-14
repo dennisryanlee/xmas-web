@@ -7,10 +7,7 @@
 				<el-divider></el-divider>
 				<br />
 
-				<el-button type="primary" icon="el-icon-circle-plus-outline" @click="goToCreateEvent">Nouveau</el-button>
-				<br />
-				<br />
-				<br />
+				<!-- <el-button type="primary" icon="el-icon-circle-plus-outline" @click="goToCreateEvent">Nouveau</el-button> -->
 
 				<el-row type="flex" justify="center">
 					<el-col type="flex">

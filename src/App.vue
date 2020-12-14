@@ -13,11 +13,12 @@
 				<a href="#" @click.prevent="onLogout">Déconnexion</a>
 			</span>
 		</div>
+		<div class="xmas__picture"></div>
+
 		<div class="alert alert-info" v-if="isBusy">Chargement...</div>
 		<div class="alert alert-danger" v-if="error">{{ error }}</div>
 
-		<router-view :key="$route.path" />
-		<div class="wave"></div>
+		<router-view :key="$route.path" class="router-view"/>
 	</div>
 </template>
 
@@ -41,49 +42,83 @@ export default {
 </script>
 
 <style lang="scss">
+@keyframes snow {
+	0% {
+		background-position: 0px 0px, 0px 0px;
+	}
+	100% {
+		background-position: 500px 1000px, 400px 400px;
+	}
+}
+@-moz-keyframes snow {
+	0% {
+		background-position: 0px 0px, 0px 0px;
+	}
+	100% {
+		background-position: 500px 1000px, 400px 400px;
+	}
+}
+@-webkit-keyframes snow {
+	0% {
+		background-position: 0px 0px, 0px 0px;
+	}
+	100% {
+		background-position: 500px 1000px, 400px 400px;
+	}
+}
+@-ms-keyframes snow {
+	0% {
+		background-position: 0px 0px, 0px 0px;
+	}
+	100% {
+		background-position: 500px 1000px, 400px 400px;
+	}
+}
+
 body {
 	margin: 0px;
 	font-size: 1rem;
 	line-height: 1.5;
-	color: #273036;
-}
+	background: #fff;
+	color: #3f4564;
 
-#app {
 	&::before {
-		z-index: -1;
 		content: "";
+		z-index: -1;
 		position: absolute;
+		background: url(./assets/xmas.png) no-repeat;
+		background-size: cover;
+		height: 50vh;
 		width: 100%;
-		height: 100%;
-		left: 0px;
-		top: 0px;
-		background: url(./assets/wave.svg) no-repeat;
-		background-color: #fff;
-		background-size: contain;
-
-		// @media only screen and (max-width: 600px) {
-		// 	display: none;
-		// }
-	}
-
-	&::after {
-		z-index: -1;
-		content: "";
-		opacity: 0.3;
-		position: absolute;
-		width: 30vw;
-		height: 165px;
-		right: 0px;
-		top: 15vw;
-		background: url(./assets/xmas-tree.svg) no-repeat;
-		background-color: transparent;
-		background-size: contain;
-
-		@media only screen and (max-width: 600px) {
-			display: none;
-		}
 	}
 }
+
+.router-view {
+	margin-top: 40vh;
+}
+
+// .xmas__picture {
+// 	background: url(./assets/xmas.png) no-repeat;
+// 	background-size: cover;
+// 	height: 50vh;
+// 	width: 100%;
+// 	position: relative;
+
+// 	&::after {
+// 		content: "";
+// 		position: absolute;
+// 		height: 100%;
+// 		width: 100%;
+// 		z-index: 9999;
+// 		top: 0;
+// 		left: 0;
+// 		background-image: url(./assets/snow_1.png), url(./assets/snow_2.png);
+// 		animation: snow 20s linear infinite;
+// 		-moz-animation: snow 20s linear infinite;
+// 		-webkit-animation: snow 20s linear infinite;
+// 		-ms-animation: snow 20s linear infinite;
+// 	}
+// }
 
 #app__container {
 	font-family: system-ui, sans-serif;
@@ -91,6 +126,7 @@ body {
 	-moz-osx-font-smoothing: grayscale;
 	text-align: center;
 	margin-top: 60px;
+
 	&::before {
 		z-index: -1;
 		opacity: 1;
@@ -98,7 +134,7 @@ body {
 		position: absolute;
 		width: 500px;
 		height: 500px;
-		top: 0px;
+		bottom: 0px;
 		left: 0px;
 
 		background: url(./assets/flocons.svg) no-repeat;
@@ -108,39 +144,6 @@ body {
 			max-width: 100%;
 		}
 	}
-
-	&::after {
-		z-index: -1;
-		opacity: 0.1;
-		content: "";
-		position: absolute;
-		width: 500px;
-		height: 500px;
-		bottom: 0px;
-		left: 0px;
-
-		background: url(./assets/gifts-reverted.svg) no-repeat;
-		background-size: 500px 500px;
-
-		@media only screen and (max-width: 600px) {
-			display: none;
-		}
-	}
-
-	// &::after {
-	// 	z-index: -1;
-	// 	content: "";
-	// 	position: absolute;
-	// 	width: 100%;
-	// 	height: 500px;
-	// 	left: 0px;
-	// 	background: url(./assets/wave.svg) no-repeat;
-	// 	background-color: #fff;
-
-	// 	@media only screen and (max-width: 600px) {
-	// 		display: none;
-	// 	}
-	// }
 }
 
 #nav {
@@ -148,7 +151,7 @@ body {
 }
 
 a {
-	color: #f56c6c;
+	color: #2a7372;
 	font-weight: 500;
 	text-decoration: none;
 }

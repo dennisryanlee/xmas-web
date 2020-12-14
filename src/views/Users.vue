@@ -4,7 +4,6 @@
 			<div class="user">
 				<h3>La Famille</h3>
 				<br />
-
 				<el-divider></el-divider>
 				<br />
 
