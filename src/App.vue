@@ -18,7 +18,7 @@
 		<div class="alert alert-info" v-if="isBusy">Chargement...</div>
 		<div class="alert alert-danger" v-if="error">{{ error }}</div>
 
-		<router-view :key="$route.path" class="router-view"/>
+		<router-view :key="$route.path" class="router-view" />
 	</div>
 </template>
 
@@ -79,7 +79,7 @@ body {
 	margin: 0px;
 	font-size: 1rem;
 	line-height: 1.5;
-	background: #fff;
+	background: #FFF;
 	color: #3f4564;
 
 	&::before {
@@ -93,6 +93,26 @@ body {
 
 		@media only screen and (max-width: 600px) {
 			margin-top: 15vh;
+		}
+	}
+
+	&::after {
+		content: "";
+		position: absolute;
+		z-index: -1;
+		top: 10vh;
+		left: 0;
+		
+		background-image: url(./assets/snow_1.png), url(./assets/snow_2.png);
+		animation: snow 20s linear infinite;
+		-moz-animation: snow 20s linear infinite;
+		-webkit-animation: snow 20s linear infinite;
+		-ms-animation: snow 20s linear infinite;
+		height: 50vh;
+		width: 100%;
+
+		@media only screen and (max-width: 600px) {
+			display: none;
 		}
 	}
 }

@@ -3,7 +3,6 @@
 		<el-col type="flex" :span="16" :xs="24">
 			<div class="user">
 				<h3>La Famille</h3>
-				<br />
 				<el-divider></el-divider>
 				<br />
 

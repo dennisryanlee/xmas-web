@@ -3,7 +3,6 @@
 		<el-col type="flex" :span="16" :xs="24">
 			<div class="events">
 				<h3>Les Evènements</h3>
-				<br />
 				<el-divider></el-divider>
 				<br />
 

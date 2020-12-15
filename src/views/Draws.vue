@@ -2,6 +2,10 @@
 	<div>
 		<el-row type="flex" justify="center">
 			<el-col type="flex" :span="16" :xs="24">
+				<h3>Résultats</h3>
+				<el-divider></el-divider>
+				<br />
+
 				<EventDraws v-if="eventId" :eventId="eventId" />
 			</el-col>
 		</el-row>
