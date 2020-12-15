@@ -2,7 +2,7 @@
 	<el-row type="flex" justify="center">
 		<el-col type="flex" :span="16" :xs="24">
 			<div class="user">
-				<h3>Page de {{ user.name }}</h3>
+				<h3>Page de {{ user.name }} 🌲</h3>
 
 				<br />
 				<el-divider></el-divider>
@@ -14,7 +14,7 @@
 				<el-divider></el-divider>
 				<br />
 
-				<h3>Les souhaits de {{user.name}}</h3>
+				<h3>Les souhaits de {{user.name}} 🎁</h3>
 				<br />
 
 				<WishesList v-if="user._id" :userId="user._id" :username="user.name" />

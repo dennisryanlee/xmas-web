@@ -2,7 +2,7 @@
 	<el-row type="flex" justify="center">
 		<el-col type="flex" :span="16" :xs="24">
 			<div class="user">
-				<h3>Mes souhaits</h3>
+				<h3>Mes souhaits 🌲</h3>
 
 				<br />
 				<el-divider></el-divider>

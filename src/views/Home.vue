@@ -2,7 +2,7 @@
 	<el-row type="flex" justify="center">
 		<el-col type="flex" :span="16" :xs="24">
 			<div class="home">
-				<h3>Bonjour {{ user.name }} !</h3>
+				<h3>Bonjour {{ user.name }} ! 🌲</h3>
 
 				<el-divider></el-divider>
 				<div>Cette année:</div>
@@ -12,23 +12,23 @@
 
 				<el-divider></el-divider>
 
-				<el-row class="home__ctas--desktop" type="flex" :span="24" justify="space-between" align="center" hidden-lg-and-down>
-					<el-col type="flex" :span="8">
+				<el-row class="home__ctas--desktop" type="flex" :span="24" justify="space-between" align="center">
+					<el-col type="flex" :span="8" class="home__links">
 						<h3>Découvre vite le résultat des tirages</h3>
 						<el-button class="home__button" type="primary" @click="navigate({ name: 'Events' })">
-							<strong>EVENEMENTS</strong>
+							<strong>EVENEMENTS ❄</strong>
 						</el-button>
 					</el-col>
-					<el-col type="flex" :span="8">
+					<el-col type="flex" :span="8" class="home__links">
 						<h3>Aide des cousins à choisir ton cadeau</h3>
 						<el-button class="home__button" type="primary" @click="navigate({ name: 'Wishes', params: { userId: currentUser._id } })">
-							<strong>MES SOUHAITS</strong>
+							<strong>MES SOUHAITS 🎁</strong>
 						</el-button>
 					</el-col>
-					<el-col type="flex" :span="8">
+					<el-col type="flex" :span="8" class="home__links">
 						<h3>Propose des idées à tes cousins</h3>
 						<el-button class="home__button" type="primary" @click="navigate({ name: 'Users' })">
-							<strong>FAMILLE</strong>
+							<strong>FAMILLE ✨</strong>
 						</el-button>
 					</el-col>
 				</el-row>
@@ -38,7 +38,7 @@
 						<el-col>
 							<h3>Découvre vite le résultat des tirages</h3>
 							<el-button class="home__button" type="primary" @click="navigate({ name: 'Events' })">
-								<strong>EVENEMENTS</strong>
+								<strong>EVENEMENTS ❄ </strong>
 							</el-button>
 						</el-col>
 					</el-row>
@@ -46,7 +46,7 @@
 						<el-col>
 							<h3>Aide des cousins à choisir ton cadeau</h3>
 							<el-button class="home__button" type="primary" @click="navigate({ name: 'Wishes', params: { userId: currentUser._id } })">
-								<strong>MES SOUHAITS</strong>
+								<strong>MES SOUHAITS 🎁</strong>
 							</el-button>
 						</el-col>
 					</el-row>
@@ -54,7 +54,7 @@
 						<el-col>
 							<h3>Propose des idées à tes cousins</h3>
 							<el-button class="home__button" type="primary" @click="navigate({ name: 'Users' })">
-								<strong>FAMILLE</strong>
+								<strong>FAMILLE ✨</strong>
 							</el-button>
 						</el-col>
 					</el-row>
@@ -110,8 +110,8 @@ export default {
 	padding: 20px;
 }
 .home__button {
-	min-width: 200px;
 }
+
 .home__ctas--mobile {
 	@media only screen and (min-width: 600px) {
 		display: none;
@@ -123,4 +123,13 @@ export default {
 		display: none;
 	}
 }
+
+.home__links {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
 </style>
