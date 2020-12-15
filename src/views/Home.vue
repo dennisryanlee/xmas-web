@@ -13,47 +13,53 @@
 				<el-divider></el-divider>
 
 				<el-row class="home__ctas--desktop" type="flex" :span="24" justify="space-between" align="center">
-					<el-col type="flex" :span="8" class="home__links">
+					<el-col type="flex" :span="8" class="home__links" justify="center">
 						<h3>Découvre vite le résultat des tirages</h3>
-						<el-button class="home__button" type="primary" @click="navigate({ name: 'Events' })">
+
+						<el-button type="primary" @click="navigate({ name: 'Events' })">
 							<strong>EVENEMENTS ❄</strong>
 						</el-button>
 					</el-col>
-					<el-col type="flex" :span="8" class="home__links">
+					<el-col type="flex" :span="8" class="home__links" justify="center">
 						<h3>Aide des cousins à choisir ton cadeau</h3>
-						<el-button class="home__button" type="primary" @click="navigate({ name: 'Wishes', params: { userId: currentUser._id } })">
+
+						<el-button type="primary" @click="navigate({ name: 'Wishes', params: { userId: currentUser._id } })">
 							<strong>MES SOUHAITS 🎁</strong>
 						</el-button>
 					</el-col>
-					<el-col type="flex" :span="8" class="home__links">
+					<el-col type="flex" :span="8" class="home__links" justify="center">
 						<h3>Propose des idées à tes cousins</h3>
-						<el-button class="home__button" type="primary" @click="navigate({ name: 'Users' })">
+
+						<el-button type="primary" @click="navigate({ name: 'Users' })">
 							<strong>FAMILLE ✨</strong>
 						</el-button>
 					</el-col>
 				</el-row>
 
 				<el-col class="home__ctas--mobile" type="flex">
-					<el-row type="flex" :span="8" :sm="24">
-						<el-col>
+					<el-row type="flex" :span="8" :sm="24" justify="center">
+						<el-col class="home__links">
 							<h3>Découvre vite le résultat des tirages</h3>
-							<el-button class="home__button" type="primary" @click="navigate({ name: 'Events' })">
+
+							<el-button type="primary" @click="navigate({ name: 'Events' })">
 								<strong>EVENEMENTS ❄ </strong>
 							</el-button>
 						</el-col>
 					</el-row>
-					<el-row type="flex" :span="8" :sm="24">
-						<el-col>
+					<el-row type="flex" :span="8" :sm="24" justify="center">
+						<el-col class="home__links">
 							<h3>Aide des cousins à choisir ton cadeau</h3>
-							<el-button class="home__button" type="primary" @click="navigate({ name: 'Wishes', params: { userId: currentUser._id } })">
+
+							<el-button type="primary" @click="navigate({ name: 'Wishes', params: { userId: currentUser._id } })">
 								<strong>MES SOUHAITS 🎁</strong>
 							</el-button>
 						</el-col>
 					</el-row>
-					<el-row type="flex" :span="8" :sm="24">
-						<el-col>
+					<el-row type="flex" :span="8" :sm="24" justify="center">
+						<el-col class="home__links">
 							<h3>Propose des idées à tes cousins</h3>
-							<el-button class="home__button" type="primary" @click="navigate({ name: 'Users' })">
+
+							<el-button type="primary" @click="navigate({ name: 'Users' })">
 								<strong>FAMILLE ✨</strong>
 							</el-button>
 						</el-col>
@@ -109,8 +115,6 @@ export default {
 	transition: 0.2s;
 	padding: 20px;
 }
-.home__button {
-}
 
 .home__ctas--mobile {
 	@media only screen and (min-width: 600px) {
@@ -128,8 +132,6 @@ export default {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-	padding-left: 10px;
-	padding-right: 10px;
+	align-items: center;
 }
-
 </style>
