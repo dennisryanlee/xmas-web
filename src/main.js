@@ -12,7 +12,7 @@ import './assets/element-variables.scss'
 import './assets/coy.css';
 import 'primevue/resources/primevue.min.css'
 import 'primeicons/primeicons.css';
-
+import 'element-plus/lib/theme-chalk/display.css';
 
 import locale from 'element-plus/lib/locale/lang/fr'
 

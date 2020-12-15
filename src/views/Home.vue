@@ -12,26 +12,54 @@
 
 				<el-divider></el-divider>
 
-				<el-row type="flex" justify="space-between" align="center">
-					<el-col>
+				<el-row class="home__ctas--desktop" type="flex" :span="24" justify="space-between" align="center" hidden-lg-and-down>
+					<el-col type="flex" :span="8">
 						<h3>Découvre vite le résultat des tirages</h3>
 						<el-button class="home__button" type="primary" @click="navigate({ name: 'Events' })">
 							<strong>EVENEMENTS</strong>
 						</el-button>
 					</el-col>
-					<el-col>
+					<el-col type="flex" :span="8">
 						<h3>Aide des cousins à choisir ton cadeau</h3>
 						<el-button class="home__button" type="primary" @click="navigate({ name: 'Wishes', params: { userId: currentUser._id } })">
 							<strong>MES SOUHAITS</strong>
 						</el-button>
 					</el-col>
-					<el-col>
+					<el-col type="flex" :span="8">
 						<h3>Propose des idées à tes cousins</h3>
 						<el-button class="home__button" type="primary" @click="navigate({ name: 'Users' })">
 							<strong>FAMILLE</strong>
 						</el-button>
 					</el-col>
 				</el-row>
+
+				<el-col class="home__ctas--mobile" type="flex">
+					<el-row type="flex" :span="8" :sm="24">
+						<el-col>
+							<h3>Découvre vite le résultat des tirages</h3>
+							<el-button class="home__button" type="primary" @click="navigate({ name: 'Events' })">
+								<strong>EVENEMENTS</strong>
+							</el-button>
+						</el-col>
+					</el-row>
+					<el-row type="flex" :span="8" :sm="24">
+						<el-col>
+							<h3>Aide des cousins à choisir ton cadeau</h3>
+							<el-button class="home__button" type="primary" @click="navigate({ name: 'Wishes', params: { userId: currentUser._id } })">
+								<strong>MES SOUHAITS</strong>
+							</el-button>
+						</el-col>
+					</el-row>
+					<el-row type="flex" :span="8" :sm="24">
+						<el-col>
+							<h3>Propose des idées à tes cousins</h3>
+							<el-button class="home__button" type="primary" @click="navigate({ name: 'Users' })">
+								<strong>FAMILLE</strong>
+							</el-button>
+						</el-col>
+					</el-row>
+				</el-col>
+
 				<br />
 				<br />
 				<br />
@@ -82,6 +110,17 @@ export default {
 	padding: 20px;
 }
 .home__button {
-	min-width: 250px;
+	min-width: 200px;
+}
+.home__ctas--mobile {
+	@media only screen and (min-width: 600px) {
+		display: none;
+	}
+}
+
+.home__ctas--desktop {
+	@media only screen and (max-width: 600px) {
+		display: none;
+	}
 }
 </style>

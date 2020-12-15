@@ -90,6 +90,10 @@ body {
 		background-size: cover;
 		height: 50vh;
 		width: 100%;
+
+		@media only screen and (max-width: 600px) {
+			margin-top: 15vh;
+		}
 	}
 }
 
@@ -97,28 +101,9 @@ body {
 	margin-top: 40vh;
 }
 
-// .xmas__picture {
-// 	background: url(./assets/xmas.png) no-repeat;
-// 	background-size: cover;
-// 	height: 50vh;
-// 	width: 100%;
-// 	position: relative;
-
-// 	&::after {
-// 		content: "";
-// 		position: absolute;
-// 		height: 100%;
-// 		width: 100%;
-// 		z-index: 9999;
-// 		top: 0;
-// 		left: 0;
-// 		background-image: url(./assets/snow_1.png), url(./assets/snow_2.png);
-// 		animation: snow 20s linear infinite;
-// 		-moz-animation: snow 20s linear infinite;
-// 		-webkit-animation: snow 20s linear infinite;
-// 		-ms-animation: snow 20s linear infinite;
-// 	}
-// }
+.router-link-active {
+	color: #f56c6c;
+}
 
 #app__container {
 	font-family: system-ui, sans-serif;
