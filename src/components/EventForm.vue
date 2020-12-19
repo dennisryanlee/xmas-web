@@ -11,8 +11,6 @@
 				</el-form-item>
 
 				<el-form-item label="Participants:">
-					<!-- <MultiSelect :disabled="formDisabled" v-model="event.members" :options="members" optionValue="_id" optionLabel="name" placeholder="Participants" display="chip" /> -->
-
 					<el-select :disabled="formDisabled" :reserve-keyword="true" v-if="loaded" v-model="event.members" multiple filterable allow-create default-first-option placeholder="Participants">
 						<el-option v-for="item in members" :key="item._id" :label="item.name" :value="item._id"> </el-option>
 					</el-select>
@@ -22,16 +20,14 @@
 					<div v-if="event.exceptions.length > 0">
 						<el-row v-for="(exception, idx) in event.exceptions" :key="exception.senderId" type="flex" justify="left" :span="24" :sm="24" style="margin-bottom: 20px">
 							<el-col :span="7">
-								<el-select @change="onChange" :disabled="formDisabled" v-model="exception.senderId" filterable @visible-change="setParticipants">
-									<el-option v-for="item in participants" :key="item._id" :label="item.name" :value="item._id"> </el-option>
+								<el-select :disabled="formDisabled" v-model="exception.senderId" filterable @visible-change="setSenders" placeholder="Choisir...">
+									<el-option v-for="item in senders" :key="item._id" :label="item.name" :value="item._id" :disabled="item.disabled"> </el-option>
 								</el-select>
 							</el-col>
 							<el-col class="line" :span="6">ne donnera pas à</el-col>
 							<el-col :span="7">
-								<!-- <MultiSelect :disabled="formDisabled" v-model="exception.receiverIds" :options="participants" @before-show="setParticipants" :filter="true" optionValue="_id" optionLabel="name" placeholder="Participants" display="chip" /> -->
-
-								<el-select :disabled="formDisabled" v-if="loaded" v-model="exception.receiverIds" multiple filterable default-first-option placeholder="Choisir...">
-									<el-option v-for="item in members" :key="item._id" :label="item.name" :value="item._id"> </el-option>
+								<el-select @visible-change="setReceivers(idx)" :disabled="formDisabled" v-if="loaded" v-model="exception.receiverIds" multiple filterable default-first-option placeholder="Choisir...">
+									<el-option v-for="item in receivers" :key="item._id" :label="item.name" :value="item._id" :disabled="item.disabled"> </el-option>
 								</el-select>
 							</el-col>
 							<el-col class="line" :span="4">
@@ -50,21 +46,21 @@
 				</el-form-item>
 			</el-form>
 		</el-card>
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
 	</el-col>
 </template>
 
 <script>
 import store from '@/store';
 import router from '@/router';
-
-// import MultiSelect from 'primevue/multiselect';
 import fetchApi from "@/services/http";
 
 export default {
 	name: 'EventForm',
-	components: {
-		// MultiSelect
-	},
 	props: {
 		eventId: String
 	},
@@ -79,24 +75,28 @@ export default {
 			loading: false,
 			loaded: false,
 			buttonLabel: 'Créer',
-			participants: [],
+			senders: [],
+			receivers: [],
 			formDisabled: false,
 		}
 	},
 	methods: {
-		async onChange() {
-			console.log('onchange');
-		},
 		async onSubmit() {
 			await this.createEvent(this.event);
 			this.$notify({ title: 'Succès', message: "Un nouveau tirage au sort a été créé", type: 'success' });
 			router.push({ name: 'Home' });
 		},
-		async getParticipants() {
-			return this.members.filter(m => this.event && this.event.members && this.event.members.find(mbr => mbr === m._id));
+		async getSenders() {
+			return this.members.filter(m => this.event && this.event.members && this.event.members.some(mbr => mbr === m._id)).map(m => Object.assign(m, { disabled: this.event.exceptions.some(mbr => `${mbr.senderId}` === `${m._id}`) }));
 		},
-		async setParticipants() {
-			this.participants = await this.getParticipants();
+		async setSenders() {
+			this.senders = await this.getSenders();
+		},
+		async getReceivers(index = null) {
+			return this.members.filter(m => this.event && this.event.members && this.event.members.some(mbr => mbr === m._id)).map(m => Object.assign(m, { disabled: !!(index !== null && this.event.exceptions[index].senderId === m._id) }));
+		},
+		async setReceivers(idx) {
+			this.receivers = await this.getReceivers(idx);
 		},
 		async createEvent(payload) {
 			await fetchApi().post('/events', { event: payload });
@@ -131,7 +131,8 @@ export default {
 
 			this.event = await this.getEvent(this.eventId);
 			this.members = await this.getUserMembers();
-			this.participants = await this.getParticipants();
+			this.senders = await this.getSenders();
+			this.receivers = await this.getReceivers();
 
 			this.loaded = true;
 		} else {
