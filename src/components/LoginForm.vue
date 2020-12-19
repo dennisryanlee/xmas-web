@@ -19,7 +19,7 @@
 <script>
 import { reactive } from "vue";
 import store from "@/store";
-import router from "@/router";
+// import router from "@/router";
 
 export default {
 	name: 'LoginForm',
@@ -31,7 +31,7 @@ export default {
 		}
 
 		function onboard() {
-			router.push({name: 'Onboarding' });
+			console.log('onboard');
 		}
 
 		return { user, onSubmit, onboard }

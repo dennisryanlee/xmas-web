@@ -1,15 +1,20 @@
 <template>
-	<div class="vue-avatar--wrapper" :style="[style, customStyle]" aria-hidden="true">
-		<!-- this img is not displayed; it is used to detect failure-to-load of div background image -->
-		<img v-if="this.isImage" style="display: none" :src="this.src" @error="onImgError" />
-		<span v-show="!this.isImage">{{ userInitial }}</span>
-	</div>
+	<el-tooltip :content="username" placement="top">
+		<div class="vue-avatar--wrapper" :style="[style, customStyle]" aria-hidden="true" @click="navigate({ name: 'User', params: { userId: userId } })">
+			<!-- this img is not displayed; it is used to detect failure-to-load of div background image -->
+			<img v-if="this.isImage" style="display: none" :src="this.src" @error="onImgError" />
+			<span v-show="!this.isImage">{{ userInitial }}</span>
+		</div>
+	</el-tooltip>
 </template>
 
 <script>
 export default {
 	name: "Avatar",
 	props: {
+		userId: {
+			type: String,
+		},
 		username: {
 			type: String,
 		},
@@ -114,6 +119,7 @@ export default {
 				justifyContent: "center",
 				textAlign: "center",
 				userSelect: "none",
+				cursor: "pointer"
 			};
 
 			const imgBackgroundAndFontStyle = {
@@ -198,6 +204,9 @@ export default {
 
 			return (usePound ? "#" : "") + (g | (b << 8) | (r << 16)).toString(16);
 		},
+		navigate(payload) {
+			this.$router.push(payload);
+		}
 	},
 };
 </script>

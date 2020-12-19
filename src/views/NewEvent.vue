@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<el-row type="flex" justify="center" :span="24" :xs="24">
-			<EventForm v-if="eventId" :eventId="eventId" />
+			<EventForm />
 		</el-row>
 	</div>
 </template>
@@ -10,7 +10,7 @@
 import EventForm from '@/components/EventForm.vue';
 
 export default {
-	name: 'Event',
+	name: 'NewEvent',
 	components: {
 		EventForm
 	},

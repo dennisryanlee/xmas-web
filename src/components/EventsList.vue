@@ -4,12 +4,11 @@
 			<el-row>
 				<router-link :to="{ name: 'Event', params: { eventId: event._id } }">{{ event.name }}</router-link>
 				|
-				<router-link v-if="event._id" :to="{ name: 'Draws', params: { eventId: event._id } }">Résultats</router-link>
+				<router-link v-if="event._id" :to="{ name: 'EventDraws', params: { eventId: event._id } }">Résultats</router-link>
 			</el-row>
 
 			<div v-for="(draw, index) in event.draws" :key="index">
-				<p v-if="event.public || currentUser._id === draw.sender._id">{{ currentUser._id === draw.sender._id ? "Tu offres un cadeau à" : `${draw.sender.name} va te chosir un cadeau` }} {{ currentUser._id === draw.receiver._id ? "" : `${draw.receiver.name}` }}</p>
-				<p v-else>{{ currentUser._id === draw.sender._id ? "Tu offres un cadeau à" : `Un secret santa va te chosir un cadeau` }} {{ currentUser._id === draw.receiver._id ? "" : `${draw.receiver.name}` }}</p>
+				<p>{{draw.sender.name}} va chosir un cadeau à {{draw.receiver.name}}</p>
 			</div>
 			<el-divider style="max-width: 50px"></el-divider>
 		</el-row>

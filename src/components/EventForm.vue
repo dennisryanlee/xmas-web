@@ -1,91 +1,99 @@
 <template>
-	<div v-if="loaded" class="event-form">
-		<h3>Tirage au sort</h3>
+	<el-col v-if="loaded" type="flex" justify="center" align="center">
+		<el-card shadow="never">
+			<el-form ref="form" :model="event" label-position="top">
+				<el-form-item label="Nom:">
+					<el-input :disabled="formDisabled" v-model="event.name" placeholder="Nom de l'évenement"></el-input>
+				</el-form-item>
 
-		<el-row type="flex" justify="center">
-			<el-card class="box-card" shadow="never">
-				<el-row type="flex" align="center" justify="end">
-					<el-col>
-						<router-link v-if="event._id" :to="{ name: 'Draws', params: { eventId: event._id } }">Résultats</router-link>
-					</el-col>
-				</el-row>
-				<el-form ref="form" :model="event" label-position="top">
-					<el-form-item label="Nom:">
-						<el-input :disabled="formDisabled" v-model="event.name" placeholder="Nom de l'évenement"></el-input>
-					</el-form-item>
+				<el-form-item label="Visibilité:">
+					<el-checkbox :disabled="formDisabled" v-model="event.public">Tout le monde peut voir la liste</el-checkbox>
+				</el-form-item>
 
-					<el-form-item label="Visibilité:">
-						<el-checkbox :disabled="formDisabled" v-model="event.public">Tout le monde peut voir la liste</el-checkbox>
-					</el-form-item>
+				<el-form-item label="Participants:">
+					<!-- <MultiSelect :disabled="formDisabled" v-model="event.members" :options="members" optionValue="_id" optionLabel="name" placeholder="Participants" display="chip" /> -->
 
-					<el-form-item label="Participants:">
-						<MultiSelect :disabled="formDisabled" v-model="event.users" :options="users" optionValue="_id" optionLabel="name" placeholder="Participants" display="chip" />
-					</el-form-item>
+					<el-select :disabled="formDisabled" :reserve-keyword="true" @change="onChange" v-if="loaded" v-model="event.members" multiple filterable allow-create default-first-option placeholder="Choose tags for your article">
+						<el-option v-for="item in members" :key="item._id" :label="item.name" :value="item._id"> </el-option>
+					</el-select>
+				</el-form-item>
 
-					<el-form-item label="Exceptions:">
-						<div v-if="event.exceptions.length > 0">
-							<el-row v-for="(exception, idx) in event.exceptions" :key="exception.senderId" type="flex" justify="left" :span="24" :sm="24">
-								<el-col :span="7">
-									<el-select :disabled="formDisabled" v-model="exception.senderId" filterable @visible-change="setParticipants">
-										<el-option v-for="item in participants" :key="item._id" :label="item.name" :value="item._id"> </el-option>
-									</el-select>
-								</el-col>
-								<el-col class="line" :span="6">ne donnera pas à</el-col>
-								<el-col :span="7">
-									<MultiSelect :disabled="formDisabled" v-model="exception.receiverIds" :options="participants" @before-show="setParticipants" :filter="true" optionValue="_id" optionLabel="name" placeholder="Participants" display="chip" />
-								</el-col>
-								<el-col class="line" :span="4">
-									<el-button :disabled="formDisabled" type="danger" circle icon="el-icon-delete" @click="removeException(idx)"></el-button>
-								</el-col>
-							</el-row>
-						</div>
+				<el-form-item label="Exceptions:">
+					<div v-if="event.exceptions.length > 0">
+						<el-row v-for="(exception, idx) in event.exceptions" :key="exception.senderId" type="flex" justify="left" :span="24" :sm="24" style="margin-bottom: 20px">
+							<el-col :span="7">
+								<el-select :disabled="formDisabled" v-model="exception.senderId" filterable @visible-change="setParticipants">
+									<el-option v-for="item in participants" :key="item._id" :label="item.name" :value="item._id"> </el-option>
+								</el-select>
+							</el-col>
+							<el-col class="line" :span="6">ne donnera pas à</el-col>
+							<el-col :span="7">
+								<!-- <MultiSelect :disabled="formDisabled" v-model="exception.receiverIds" :options="participants" @before-show="setParticipants" :filter="true" optionValue="_id" optionLabel="name" placeholder="Participants" display="chip" /> -->
 
-						<div>
-							<el-button :disabled="formDisabled" type="text" icon="el-icon-circle-plus-outline" @click="addException">Ajouter une exception</el-button>
-						</div>
-					</el-form-item>
+								<el-select :disabled="formDisabled" v-if="loaded" v-model="exception.receiverIds" multiple filterable default-first-option placeholder="Choose tags for your article">
+									<el-option v-for="item in members" :key="item._id" :label="item.name" :value="item._id"> </el-option>
+								</el-select>
+							</el-col>
+							<el-col class="line" :span="4">
+								<el-button :disabled="formDisabled" type="danger" circle icon="el-icon-delete" @click="removeException(idx)"></el-button>
+							</el-col>
+						</el-row>
+					</div>
 
-					<el-form-item>
-						<el-button :disabled="formDisabled" type="primary" icon="el-icon-circle-plus-outline" @click="onSubmit">{{ buttonLabel }}</el-button>
-					</el-form-item>
-				</el-form>
-			</el-card>
-		</el-row>
-	</div>
+					<div v-if="!formDisabled">
+						<el-button :disabled="formDisabled" type="text" icon="el-icon-circle-plus-outline" @click="addException">Ajouter une exception</el-button>
+					</div>
+				</el-form-item>
+
+				<el-form-item v-if="!formDisabled">
+					<el-button :disabled="formDisabled" type="primary" icon="el-icon-circle-plus-outline" @click="onSubmit">{{ buttonLabel }}</el-button>
+				</el-form-item>
+			</el-form>
+		</el-card>
+	</el-col>
 </template>
 
 <script>
-import MultiSelect from 'primevue/multiselect';
+import store from '@/store';
+import router from '@/router';
+
+// import MultiSelect from 'primevue/multiselect';
 import fetchApi from "@/services/http";
 
 export default {
 	name: 'EventForm',
 	components: {
-		MultiSelect
+		// MultiSelect
+	},
+	props: {
+		eventId: String
 	},
 	data() {
 		return {
 			event: {
 				name: null,
-				users: [],
+				members: [],
 				exceptions: []
 			},
-			users: [],
+			members: [],
 			loading: false,
 			loaded: false,
 			buttonLabel: 'Créer',
 			participants: [],
-			formDisabled: false
+			formDisabled: false,
 		}
 	},
 	methods: {
+		async onChange() {
+			console.log('onchange');
+		},
 		async onSubmit() {
 			await this.createEvent(this.event);
 			this.$notify({ title: 'Succès', message: "Un nouveau tirage au sort a été créé", type: 'success' });
-			this.$router.push({ name: 'Home' });
+			router.push({ name: 'Home' });
 		},
 		async getParticipants() {
-			return this.users.filter(u => this.event && this.event.users && this.event.users.find(usr => usr === u._id));
+			return this.members.filter(m => this.event && this.event.members && this.event.members.find(mbr => mbr === m._id));
 		},
 		async setParticipants() {
 			this.participants = await this.getParticipants();
@@ -98,9 +106,13 @@ export default {
 			let { data: event = null } = await fetchApi().get(`/events/${eventId}`);
 			return event;
 		},
-		async getUsers() {
-			let { data: users = [] } = await fetchApi().get('/users');
-			return users.map(user => { return { _id: `${user._id}`, name: `${user.name}` } });
+		async getUserMembers() {
+			let { data: members = [] } = await fetchApi().get(`/users/${this.currentUser._id}/members`);
+			return members.filter(m => (!m.user || !m.user._id) || (m && m.user && m.user._id && this.event.members.some(mbr => `${mbr}` === `${m._id}`))).map(member => { return { _id: `${member._id}`, name: `${member.name}` } });
+		},
+		async getRelations() {
+			let { data: members = [] } = await fetchApi().get(`/users/${this.currentUser._id}/relations`);
+			return members.map(member => { return { _id: `${member._id}`, name: `${member.name}` } });
 		},
 		addException() {
 			this.event.exceptions.push({ senderId: null, receiverIds: [] })
@@ -109,27 +121,28 @@ export default {
 			this.event.exceptions.splice(index, 1);
 		},
 	},
+	computed: {
+		currentUser: () => store.getters.getUser
+	},
 	async mounted() {
-		let { eventId = null } = this.$route.params || {};
-
-		this.users = await this.getUsers();
-
-		if (eventId && eventId !== 'new') {
+		if (this.eventId && this.eventId !== 'new') {
 			this.buttonLabel = 'Modifier';
 			this.formDisabled = true;
 
-			this.event = await this.getEvent(eventId);
+			this.event = await this.getEvent(this.eventId);
+			this.members = await this.getUserMembers();
 			this.participants = await this.getParticipants();
 
 			this.loaded = true;
 		} else {
+			this.members = await this.getRelations();
 			this.loaded = true;
 		}
 	}
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .event-form {
 	transition: 0.2s;
 	padding: 20px;
@@ -139,9 +152,7 @@ export default {
 	border-radius: 5px;
 	width: 100%;
 }
-</style>
 
-<style lang="scss" scoped>
 .el-form--label-top .el-form-item__label {
 	width: 100%;
 }
@@ -185,7 +196,7 @@ export default {
 	margin: 5px 5px 5px 1px;
 }
 
-.box-card {
-	max-width: 100%;
+.el-select {
+	width: 100%;
 }
 </style>

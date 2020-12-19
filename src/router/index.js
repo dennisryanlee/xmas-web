@@ -2,16 +2,15 @@ import { createWebHistory, createRouter } from "vue-router";
 import store from "@/store";
 
 import Login from "@/views/Login.vue";
-import Onboarding from "@/views/Onboarding.vue";
-
 import Home from "@/views/Home.vue";
 import User from "@/views/User.vue";
-import Users from "@/views/Users.vue";
+import Relations from "@/views/Relations.vue";
+import Wishes from "@/views/Wishes.vue";
+import Member from "@/views/Member.vue";
+import NewEvent from "@/views/NewEvent.vue";
 import Event from "@/views/Event.vue";
 import Events from "@/views/Events.vue";
-import Wishes from "@/views/Wishes.vue";
-import Draws from "@/views/Draws.vue";
-
+import EventDraws from "@/views/EventDraws.vue";
 import NotFound from "@/views/NotFound.vue";
 
 const authGuard = (to, from, next) => {
@@ -30,25 +29,21 @@ const routes = [
 		}
 	},
 	{
-		path: "/onboarding",
-		name: "Onboarding",
-		component: Onboarding,
-		beforeEnter: (to, from, next) => {
-			if (store.getters.isAuthenticated) next("/")
-			next();
-		}
-	},
-	{
 		path: "/",
 		name: "Home",
 		component: Home,
 		beforeEnter: authGuard
 	},
-	// { path: '/events', component: Events, props: true },
 	{
 		path: "/events",
 		name: "Events",
 		component: Events,
+		beforeEnter: authGuard
+	},
+	{
+		path: "/event",
+		name: "NewEvent",
+		component: NewEvent,
 		beforeEnter: authGuard
 	},
 	{
@@ -59,20 +54,26 @@ const routes = [
 	},
 	{
 		path: "/events/:eventId/draws",
-		name: "Draws",
-		component: Draws,
+		name: "EventDraws",
+		component: EventDraws,
 		beforeEnter: authGuard
 	},
 	{
-		path: "/users",
-		name: "Users",
-		component: Users,
+		path: "/relations",
+		name: "Relations",
+		component: Relations,
 		beforeEnter: authGuard
 	},
 	{
 		path: "/users/:userId",
 		name: "User",
 		component: User,
+		beforeEnter: authGuard
+	},
+	{
+		path: "/members/:memberId",
+		name: "Member",
+		component: Member,
 		beforeEnter: authGuard
 	},
 	{

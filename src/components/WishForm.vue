@@ -6,7 +6,7 @@
 					<el-row type="flex" align="space-between" justify="space-between" class="clearfix">
 						<el-col type="flex" align="start">
 							<el-form-item>
-								<el-input :disabled="formDisabled" v-model="wish.title" placeholder="Votre souhait"></el-input>
+								<el-input :disabled="formDisabled" v-model="wish.title" placeholder="Souhait"></el-input>
 							</el-form-item>
 						</el-col>
 						<el-col type="flex" align="end">
@@ -41,7 +41,7 @@
 
 					<el-col align="end">
 						<el-form-item v-if="currentUser._id !== userId">
-							<el-checkbox v-model="wish.hidden">Secret pour {{username}}</el-checkbox>
+							<el-checkbox v-model="wish.hidden">Secret pour {{ username }}</el-checkbox>
 						</el-form-item>
 					</el-col>
 				</el-row>
@@ -62,6 +62,7 @@ export default {
 		editWish: Object,
 		afterEdit: Function,
 		userId: String,
+		memberId: String,
 		username: String
 	},
 	data() {
@@ -87,14 +88,21 @@ export default {
 			await fetchApi().put(`/wishes/${wishId}`, payload)
 			this.$emit('after-edit');
 		},
-		async createWish(userId, payload) {
+		async createUserWish(userId, payload) {
 			await fetchApi().post(`/users/${userId}/wishes`, payload)
+			this.$emit('after-edit');
+		},
+		async createMemberWish(memberId, payload) {
+			await fetchApi().post(`/members/${memberId}/wishes`, payload)
 			this.$emit('after-edit');
 		},
 		async onSubmit() {
 			if (this.wish && this.wish._id) await this.updateWish(this.wish._id, this.wish)
-			else {
-				await this.createWish(this.userId, this.wish)
+			else if (this.userId){
+				await this.createUserWish(this.userId, this.wish)
+				this.wish = {};
+			} else {
+				await this.createMemberWish(this.memberId, this.wish)
 				this.wish = {};
 			}
 		}
@@ -102,21 +110,7 @@ export default {
 }
 </script>
 
-<style scoped>
-h3 {
-	margin: 40px 0 0;
-}
-ul {
-	list-style-type: none;
-	padding: 0;
-}
-li {
-	display: inline-block;
-	margin: 0 10px;
-}
-a {
-	color: #42b983;
-}
+<style lang="scss" scoped>
 .box-card {
 	margin-bottom: 20px;
 }
@@ -125,6 +119,9 @@ a {
 }
 
 .wish-form__card-button--save {
-	color: #42b983;
+	color: #2a7372;
+	&:hover {
+		color: #0d4140;
+	}
 }
 </style>

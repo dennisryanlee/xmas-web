@@ -1,23 +1,23 @@
 <template>
 	<el-row type="flex" justify="center">
 		<el-col type="flex" :span="16" :xs="24">
-			<div class="user">
-				<h3>Page de {{ user.name }} 🌲</h3>
+			<div class="member">
+				<h3>Page de {{ member.name }} 🌲</h3>
 
 				<br />
 				<el-divider></el-divider>
 				<br />
 
-				<DrawsList v-if="user._id" :userId="user._id" :key="user._id" />
+				<DrawsList v-if="member._id" :memberId="member._id" :key="member._id" />
 
 				<br />
 				<el-divider></el-divider>
 				<br />
 
-				<h3>Les souhaits de {{user.name}} 🎁</h3>
+				<h3>Les souhaits de {{member.name}} 🎁</h3>
 				<br />
 
-				<WishesList v-if="user._id" :userId="user._id" :username="user.name" />
+				<WishesList v-if="member._id" :memberId="member._id" :username="member.name" />
 
 				<br />
 				<br />
@@ -33,31 +33,31 @@ import DrawsList from '@/components/DrawsList.vue'
 import WishesList from '@/components/WishesList.vue'
 
 export default {
-	name: 'User',
+	name: 'Member',
 	components: {
 		DrawsList,
 		WishesList
 	},
 	data() {
 		return {
-			user: {}
+			member: {}
 		}
 	},
 	methods: {
-		async getUser(userId) {
-			let { data: user = {} } = await fetchApi().get(`/users/${userId}`)
-			return user;
+		async getMember(memberId) {
+			let { data: member = {} } = await fetchApi().get(`/members/${memberId}`)
+			return member;
 		}
 	},
 	async mounted() {
-		let { userId = null } = this.$route.params || {};
-		this.user = await this.getUser(userId);
+		let { memberId = null } = this.$route.params || {};
+		this.member = await this.getMember(memberId);
 	}
 }
 </script>
 
 <style lang="scss" scoped>
-.user {
+.member {
 	transition: 0.2s;
 	padding: 20px;
 }

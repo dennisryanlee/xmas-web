@@ -8,7 +8,7 @@
 				<div>Cette année:</div>
 				<br />
 
-				<SenderDraws v-if="user._id" :senderId="user._id" />
+				<DrawsList v-if="user._id" :userId="user._id" />
 
 				<el-divider></el-divider>
 
@@ -76,14 +76,14 @@
 
 <script>
 import fetchApi from "@/services/http";
-import SenderDraws from '@/components/SenderDraws.vue';
-
 import store from '@/store';
+
+import DrawsList from '@/components/DrawsList.vue';
 
 export default {
 	name: 'Home',
 	components: {
-		SenderDraws
+		DrawsList
 	},
 	data() {
 		return {

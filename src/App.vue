@@ -8,7 +8,7 @@
 				|
 				<router-link to="/events">Evénements</router-link>
 				|
-				<router-link to="/users">Famille</router-link>
+				<router-link to="/relations">Famille & Amis</router-link>
 				|
 				<a href="#" @click.prevent="onLogout">Déconnexion</a>
 			</span>

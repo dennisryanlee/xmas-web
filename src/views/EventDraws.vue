@@ -6,37 +6,28 @@
 				<el-divider></el-divider>
 				<br />
 
-				<EventDraws v-if="eventId" :eventId="eventId" />
+				<DrawsList v-if="eventId" :eventId="eventId" />
 			</el-col>
 		</el-row>
 	</div>
 </template>
 
 <script>
-import fetchApi from "@/services/http";
-import EventDraws from '@/components/EventDraws.vue';
+import DrawsList from '@/components/DrawsList.vue';
 
 export default {
-	name: 'Draws',
+	name: 'EventDraws',
 	components: {
-		EventDraws
+		DrawsList
 	},
 	data() {
 		return {
-			users: [],
 			eventId: null
-		}
-	},
-	methods: {
-		async getUsers() {
-			let { data: users = [] } = await fetchApi().get('/users');
-			return users;
 		}
 	},
 	async mounted() {
 		let { eventId = null } = this.$route.params || {};
 		this.eventId = eventId;
-		this.users = await this.getUsers();
 	}
 }
 </script>

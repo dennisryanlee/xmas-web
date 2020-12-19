@@ -2,23 +2,23 @@
 	<el-row type="flex" justify="center">
 		<el-col type="flex" :span="16" :xs="24">
 			<div class="user">
-				<h3>La Famille ✨</h3>
+				<h3>Famille & Amis ✨</h3>
 				<el-divider></el-divider>
 				<br />
 
-				<UsersList />
+				<RelationsList />
 			</div>
 		</el-col>
 	</el-row>
 </template>
 
 <script>
-import UsersList from '@/components/UsersList.vue'
+import RelationsList from '@/components/RelationsList.vue'
 
 export default {
-	name: 'Users',
+	name: 'Relations',
 	components: {
-		UsersList
+		RelationsList
 	}
 }
 </script>

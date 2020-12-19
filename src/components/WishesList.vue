@@ -33,18 +33,18 @@
 							</el-col>
 
 							<el-col align="end">
-								<Avatar :username="wish.emitter.name" :backgroundColor="(wish.emitter && wish.emitter.avatar && wish.emitter.avatar.backgroundColor) || 'black'" :color="(wish.emitter && wish.emitter.avatar && wish.emitter.avatar.color) || 'white'" :inline="true" :size="40" />
+								<Avatar :userId="wish.emitter._id" :username="wish.emitter.name" :backgroundColor="(wish.emitter && wish.emitter.avatar && wish.emitter.avatar.backgroundColor) || 'black'" :color="(wish.emitter && wish.emitter.avatar && wish.emitter.avatar.color) || 'white'" :inline="true" :size="40" />
 							</el-col>
 						</el-row>
 					</el-card>
 					<div v-if="index === wishEdit">
-						<WishForm :userId="userId" :username="username" :editWish="wish" @afterEdit="afterEdit" />
+						<WishForm :userId="userId" :memberId="memberId" :username="username" :editWish="wish" @afterEdit="afterEdit" />
 					</div>
 				</div>
 
 				<el-button v-if="!addNewWish" type="primary" @click="addItem()" icon="el-icon-circle-plus-outline">Ajouter</el-button>
 				<div v-if="addNewWish">
-					<WishForm :userId="userId" :username="username" @afterEdit="afterEdit" />
+					<WishForm :userId="userId" :memberId="memberId" :username="username" @afterEdit="afterEdit" />
 				</div>
 			</el-col>
 		</el-row>
@@ -68,6 +68,7 @@ export default {
 	},
 	props: {
 		userId: String,
+		memberId: String,
 		username: String
 	},
 	data() {
@@ -89,49 +90,34 @@ export default {
 			await fetchApi().delete(`/wishes/${wishId}`);
 			return true;
 		},
-		async getWishes(userId) {
+		async getUserWishes(userId) {
 			let { data: wishes = [] } = await fetchApi().get(`/users/${userId}/wishes`);
+			return wishes;
+		},
+		async getMemberWishes(memberId) {
+			let { data: wishes = [] } = await fetchApi().get(`/members/${memberId}/wishes`);
 			return wishes;
 		},
 		async deleteItem(index) {
 			await this.deleteWish(this.wishes[index]._id);
-			this.wishes = await this.getWishes(this.userId);
+			this.wishes = this.userId ? await this.getUserWishes(this.userId) : await this.getMemberWishes(this.memberId);
 		},
 		async afterEdit() {
 			this.wishEdit = null;
 			this.addNewWish = false;
-			this.wishes = await this.getWishes(this.userId);
+			this.wishes = this.userId ? await this.getUserWishes(this.userId) : await this.getMemberWishes(this.memberId);
 		}
+	},
+	async mounted() {
+		this.wishes = this.userId ? await this.getUserWishes(this.userId) : await this.getMemberWishes(this.memberId);
 	},
 	computed: {
 		currentUser: () => store.getters.getUser
-	},
-	async mounted() {
-		this.wishes = await this.getWishes(this.userId);
 	}
 }
 </script>
 
 <style lang="scss" scoped>
-h3 {
-	margin: 40px 0 0;
-}
-ul {
-	list-style-type: none;
-	padding: 0;
-}
-li {
-	display: inline-block;
-	margin: 0 10px;
-}
-a {
-	color: #42b983;
-}
-.wish-title {
-	display: flex;
-	align-items: center;
-	justify-content: flex-start;
-}
 .wishes-list__card-content {
 	padding-bottom: 20px;
 }

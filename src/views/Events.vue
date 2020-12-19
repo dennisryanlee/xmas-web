@@ -6,7 +6,10 @@
 				<el-divider></el-divider>
 				<br />
 
-				<!-- <el-button type="primary" icon="el-icon-circle-plus-outline" @click="goToCreateEvent">Nouveau</el-button> -->
+				<el-button type="primary" icon="el-icon-circle-plus-outline" @click="goToCreateEvent">Nouveau</el-button>
+				<br />
+				<br />
+				<br />
 
 				<el-row type="flex" justify="center">
 					<el-col type="flex">
@@ -36,7 +39,7 @@ export default {
 	},
 	methods: {
 		goToCreateEvent() {
-			this.$router.push({ name: 'Events', query: { new: 'true' } });
+			this.$router.push({ name: 'NewEvent' });
 		},
 		async getEvents(userId) {
 			let { data: events = [] } = await fetchApi().get(`/users/${userId}/events`)
