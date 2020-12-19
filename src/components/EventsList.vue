@@ -8,7 +8,7 @@
 			</el-row>
 
 			<div v-for="(draw, index) in event.draws" :key="index">
-				<p>{{draw.sender.name}} va chosir un cadeau à {{draw.receiver.name}}</p>
+				<div>{{ draw.sender.name }} offre un cadeau à {{ draw.receiver.name }}</div>
 			</div>
 			<el-divider style="max-width: 50px"></el-divider>
 		</el-row>
@@ -16,22 +16,28 @@
 </template>
 
 <script>
+import fetchApi from "@/services/http";
 import store from '@/store';
 
 export default {
 	name: 'EventsList',
-	props: {
-		events: Array
+	data() {
+		return {
+			events: []
+		}
+	},
+	methods: {
+		async getEvents(userId) {
+			let { data: events = [] } = await fetchApi().get(`/users/${userId}/events`)
+			return events;
+		}
 	},
 	computed: {
 		currentUser: () => store.getters.getUser
+	},
+	async mounted() {
+		let { _id: userId = null } = this.currentUser || {};
+		this.events = await this.getEvents(userId);
 	}
 }
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-.el-timeline {
-	font-size: 20px;
-}
-</style>

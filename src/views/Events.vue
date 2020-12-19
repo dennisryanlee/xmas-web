@@ -13,7 +13,7 @@
 
 				<el-row type="flex" justify="center">
 					<el-col type="flex">
-						<EventsList :events="events" />
+						<EventsList />
 					</el-col>
 				</el-row>
 			</div>
@@ -22,36 +22,18 @@
 </template>
 
 <script>
-import fetchApi from "@/services/http";
 import EventsList from '@/components/EventsList.vue';
-
-import store from '@/store';
+import router from '@/router';
 
 export default {
 	name: 'Events',
 	components: {
 		EventsList
 	},
-	data() {
-		return {
-			events: []
-		}
-	},
 	methods: {
 		goToCreateEvent() {
-			this.$router.push({ name: 'NewEvent' });
-		},
-		async getEvents(userId) {
-			let { data: events = [] } = await fetchApi().get(`/users/${userId}/events`)
-			return events;
+			router.push({ name: 'NewEvent' });
 		}
-	},
-	computed: {
-		currentUser: () => store.getters.getUser
-	},
-	async mounted() {
-		let { _id: userId = null } = this.currentUser || {};
-		this.events = await this.getEvents(userId);
 	}
 }
 </script>

@@ -13,7 +13,7 @@
 				<el-form-item label="Participants:">
 					<!-- <MultiSelect :disabled="formDisabled" v-model="event.members" :options="members" optionValue="_id" optionLabel="name" placeholder="Participants" display="chip" /> -->
 
-					<el-select :disabled="formDisabled" :reserve-keyword="true" @change="onChange" v-if="loaded" v-model="event.members" multiple filterable allow-create default-first-option placeholder="Choose tags for your article">
+					<el-select :disabled="formDisabled" :reserve-keyword="true" v-if="loaded" v-model="event.members" multiple filterable allow-create default-first-option placeholder="Participants">
 						<el-option v-for="item in members" :key="item._id" :label="item.name" :value="item._id"> </el-option>
 					</el-select>
 				</el-form-item>
@@ -22,7 +22,7 @@
 					<div v-if="event.exceptions.length > 0">
 						<el-row v-for="(exception, idx) in event.exceptions" :key="exception.senderId" type="flex" justify="left" :span="24" :sm="24" style="margin-bottom: 20px">
 							<el-col :span="7">
-								<el-select :disabled="formDisabled" v-model="exception.senderId" filterable @visible-change="setParticipants">
+								<el-select @change="onChange" :disabled="formDisabled" v-model="exception.senderId" filterable @visible-change="setParticipants">
 									<el-option v-for="item in participants" :key="item._id" :label="item.name" :value="item._id"> </el-option>
 								</el-select>
 							</el-col>
@@ -30,7 +30,7 @@
 							<el-col :span="7">
 								<!-- <MultiSelect :disabled="formDisabled" v-model="exception.receiverIds" :options="participants" @before-show="setParticipants" :filter="true" optionValue="_id" optionLabel="name" placeholder="Participants" display="chip" /> -->
 
-								<el-select :disabled="formDisabled" v-if="loaded" v-model="exception.receiverIds" multiple filterable default-first-option placeholder="Choose tags for your article">
+								<el-select :disabled="formDisabled" v-if="loaded" v-model="exception.receiverIds" multiple filterable default-first-option placeholder="Choisir...">
 									<el-option v-for="item in members" :key="item._id" :label="item.name" :value="item._id"> </el-option>
 								</el-select>
 							</el-col>
