@@ -2,7 +2,7 @@
 	<div v-if="draws.length > 0">
 		<el-row type="flex" justify="center" align="center" v-for="draw in draws" :key="draw._id">
 			<el-col :span="16" :xs="24" style="text-align: center; padding-bottom: 10px">
-				<div>{{ draw.sender.name }} offre un cadeau à {{ draw.receiver.name }} pour {{ draw.event.name }}</div>
+				<div>{{ draw.sender.name }} offre un cadeau à {{ draw.receiver.name }} pour {{ draw.event.name }}</div>			
 			</el-col>
 		</el-row>
 	</div>

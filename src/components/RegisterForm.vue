@@ -1,6 +1,6 @@
 <template>
-	<div class="login-form">
-		<h3>Bienvenue</h3>
+	<div class="register-form">
+		<h3>Créer un compte</h3>
 		<el-form ref="form" :model="user" label-position="right" v-on:submit.prevent="onSubmit">
 			<el-form-item label="Identifiant:">
 				<el-input v-model="user.username"></el-input>
@@ -9,17 +9,15 @@
 				<el-input v-model="user.password" type="password"></el-input>
 			</el-form-item>
 			<el-form-item>
-				<el-button type="primary" native-type="submit" icon="el-icon-connection" @click="onSubmit">Connexion</el-button>
+				<el-button type="primary" native-type="submit" icon="el-icon-connection" @click="onSubmit">Créer un compte</el-button>
 			</el-form-item>
 		</el-form>
-		<el-button type="primary" icon="el-icon-thumb" @click="onboard"><strong>Pas encore de compte</strong></el-button>
 	</div>
 </template>
 
 <script>
 import { reactive } from "vue";
 import store from "@/store";
-import router from "@/router";
 
 export default {
 	name: 'LoginForm',
@@ -27,20 +25,16 @@ export default {
 		let user = reactive({ username: "", password: "" });
 
 		function onSubmit() {
-			store.dispatch("login", user);
+			store.dispatch("register", user);
 		}
 
-		function onboard() {
-			router.push({ name: 'Register' })
-		}
-
-		return { user, onSubmit, onboard }
+		return { user, onSubmit }
 	}
 }
 </script>
 
 <style scoped>
-.login-form {
+.register-form {
 	margin-top: -30vh;
 	border: 1px solid #ebebeb;
 	border-radius: 4px;

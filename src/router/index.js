@@ -2,6 +2,7 @@ import { createWebHistory, createRouter } from "vue-router";
 import store from "@/store";
 
 import Login from "@/views/Login.vue";
+import Register from "@/views/Register.vue";
 import Home from "@/views/Home.vue";
 import User from "@/views/User.vue";
 import Relations from "@/views/Relations.vue";
@@ -23,6 +24,15 @@ const routes = [
 		path: "/login",
 		name: "Login",
 		component: Login,
+		beforeEnter: (to, from, next) => {
+			if (store.getters.isAuthenticated) next("/")
+			next();
+		}
+	},
+	{
+		path: "/register",
+		name: "Register",
+		component: Register,
 		beforeEnter: (to, from, next) => {
 			if (store.getters.isAuthenticated) next("/")
 			next();
