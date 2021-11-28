@@ -105,8 +105,8 @@ export default {
 			let { data: members = [] } = await fetchApi().get(`/users/${this.currentUser._id}/members`);
 			return members.filter(m => (!m.user || !m.user._id) || (m && m.user && m.user._id && this.event.members.some(mbr => `${mbr}` === `${m._id}`))).map(member => { return { _id: `${member._id}`, name: `${member.name}` } });
 		},
-		async getRelations() {
-			let { data: members = [] } = await fetchApi().get(`/users/${this.currentUser._id}/relations`);
+		async getContacts() {
+			let { data: members = [] } = await fetchApi().get(`/users/${this.currentUser._id}/contacts`);
 			return members.map(member => { return { _id: `${member._id}`, name: `${member.name}` } });
 		},
 		addException() {
@@ -131,7 +131,7 @@ export default {
 
 			this.loaded = true;
 		} else {
-			this.members = await this.getRelations();
+			this.members = await this.getContacts();
 			this.loaded = true;
 		}
 	}

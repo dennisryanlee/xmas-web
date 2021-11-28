@@ -5,7 +5,7 @@ import Login from "@/views/Login.vue";
 import Register from "@/views/Register.vue";
 import Home from "@/views/Home.vue";
 import User from "@/views/User.vue";
-import Relations from "@/views/Relations.vue";
+import Contacts from "@/views/Contacts.vue";
 import Wishes from "@/views/Wishes.vue";
 import NewEvent from "@/views/NewEvent.vue";
 import Event from "@/views/Event.vue";
@@ -68,9 +68,9 @@ const routes = [
 		beforeEnter: authGuard
 	},
 	{
-		path: "/relations",
-		name: "Relations",
-		component: Relations,
+		path: "/contacts",
+		name: "Contacts",
+		component: Contacts,
 		beforeEnter: authGuard
 	},
 	{

@@ -1,8 +1,13 @@
 <template>
 	<div>
 		<Nav v-if="isAuthenticated" />
-		<div v-if="isBusy">Chargement...</div>
-		<div v-if="error">{{ error }}</div>
+		<div v-if="isBusy" class="d-flex align-items-center container mb-4 mb-lg-5">
+			<strong>Loading...</strong>
+			<b-spinner class="ms-auto"></b-spinner>
+		</div>
+		<b-alert class="container mb-4 mb-lg-5" :show="!!error" variant="danger">
+			<span class="text-center text-md-right d-flex justify-content-center">{{error}}</span>
+		</b-alert>
 		<router-view :key="$route.path" class="router-view" />
 		<Footer />
 	</div>

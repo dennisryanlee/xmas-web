@@ -1,17 +1,15 @@
 <template>
-	<div class="container mb-4 mb-lg-5">
-		<Overview :title="`Bievenue ${user.name}`" description="Ceci est la home page, vous y retrouvez la liste des évènements à venir (noel, anniversaire etc..)">
-			<template v-slot:actionButtons>
-				<div class="col-12 col-lg-3 mb-auto">
-					<div class="list-actions">
-						<a class="list-actions__primary-btn mt-2 mt-lg-0" href="#">Créer une liste</a>
-						<a class="list-actions__secondary-btn mb-0" href="#">Explorer les tendances</a>
-					</div>
+	<Overview :title="`Bievenue ${user.name}`" description="Ceci est la home page, vous y retrouvez la liste des évènements à venir (noel, anniversaire etc..)">
+		<template v-slot:actionButtons>
+			<div class="col-12 col-lg-3 mb-auto">
+				<div class="list-actions">
+					<a class="list-actions__primary-btn mt-2 mt-lg-0" href="#">Créer une liste</a>
+					<a class="list-actions__secondary-btn mb-0" href="#">Explorer les tendances</a>
 				</div>
-			</template>
-		</Overview>
-		<!-- <HomeList /> -->
-	</div>
+			</div>
+		</template>
+	</Overview>
+	<!-- <HomeList /> -->
 </template>
 
 <script>
