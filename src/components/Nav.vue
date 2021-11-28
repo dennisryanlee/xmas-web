@@ -71,11 +71,11 @@
 					<div class="dropdown d-none d-lg-block">
 						<a class="navbar__link nav-link p-0 ml-3" data-bs-toggle="dropdown" href="#" role="button">
 							<div class="navbar__profile-picture profile-picture profile-picture--small">
-								<Avatar class="profile-picture__img" username="Gautier" :inline="true" :size="40" />
+								<Avatar class="profile-picture__img" :username="currentUser.username" :inline="true" :size="40" />
 							</div>
 						</a>
 						<div class="navbar__dropdown dropdown-menu dropdown-menu-right">
-							<div class="navbar__dropdown-item navbar__title">Gautier Morel</div>
+							<div class="navbar__dropdown-item navbar__title">{{username}}</div>
 							<div class="dropdown-divider"></div>
 							<a class="navbar__dropdown-item dropdown-item" href="#">
 								<unicon class="navbar__icon navbar__icon--with-text" viewBox="0 0 496 512" name="go-user-circle" />
@@ -208,10 +208,25 @@ export default {
 		Avatar,
 	},
 	computed: {
-		currentUser: () => store.getters.getUser
+		currentUser: () => store.getters.getUser,
+		username: () => {
+			const { firstName, lastName, name } = store.getters.getUser
+			if (!firstName && !lastName) return name
+			return `${firstName}${lastName}`
+		}
+	},
+	data() {
+		return {
+			active: false,
+		}
 	},
 	methods: {
 		onLogout: () => store.dispatch("logout"),
+		modalToggle() {
+			const body = document.querySelector("body")
+			this.active = !this.active
+			this.active ? body.classList.add("modal-open") : body.classList.remove("modal-open")
+		},
 	}
 }
 </script>

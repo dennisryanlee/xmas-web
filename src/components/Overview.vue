@@ -1,20 +1,13 @@
 <template>
 	<section class="profile-card mt-4 mt-lg-0 profile-card--user">
-		<div class="row align-items-lg-center justify-content-lg-start">
-			<div class="col-12 col-lg-2">
-				<Avatar class="profile-picture profile-picture--large profile-picture--centered" :username="user.name" :inline="true" :size="150" />
-			</div>
+		<div class="row align-items-lg-center justify-content-lg-between">
+			<slot name="avatar"></slot>
 			<div class="col-12 text-center text-lg-left col-lg-7">
-				<h2 class="user__name">{{ user.name }}</h2>
-				<p class="user__description">{{ user.description || "Description non renseignée" }}</p>
-				<Stats :userId="user._id" />
+				<h2 class="user__name">{{ title }}</h2>
+				<p class="user__description">{{ description }}</p>
+				<slot name="stats"></slot>
 			</div>
-			<div class="col-12 col-lg-3 mb-auto">
-				<div class="list-actions">
-					<a class="list-actions__primary-btn mt-2 mt-lg-0" href="#">Créer une liste</a>
-					<a class="list-actions__secondary-btn mb-0" href="#">Explorer les tendances</a>
-				</div>
-			</div>
+			<slot name="actionButtons"></slot>
 		</div>
 	</section>
 </template>
@@ -22,17 +15,13 @@
 <script>
 import fetchApi from "@/services/http";
 
-import Avatar from '@/components/Avatar.vue'
-import Stats from '@/components/Stats.vue'
-
 export default {
 	name: 'Overview',
-	components: {
-		Avatar,
-		Stats,
-	},
 	props: {
-		userId: {
+		title: {
+			type: String,
+		},
+		description: {
 			type: String,
 		}
 	},
