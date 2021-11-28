@@ -1,21 +1,18 @@
 <template>
-	<el-col v-if="loaded" type="flex" justify="center" align="center">
+	<el-row v-if="loaded" type="flex" justify="center" align="center">
 		<el-card shadow="never">
 			<el-form ref="form" :model="event" label-position="top">
 				<el-form-item label="Nom:">
 					<el-input :disabled="formDisabled" v-model="event.name" placeholder="Nom de l'évenement"></el-input>
 				</el-form-item>
-
 				<el-form-item label="Visibilité:">
 					<el-checkbox :disabled="formDisabled" v-model="event.public">Tout le monde peut voir la liste</el-checkbox>
 				</el-form-item>
-
 				<el-form-item label="Participants:">
 					<el-select :disabled="formDisabled" :reserve-keyword="true" v-if="loaded" v-model="event.members" multiple filterable allow-create default-first-option placeholder="Participants">
 						<el-option v-for="item in members" :key="item._id" :label="item.name" :value="item._id"> </el-option>
 					</el-select>
 				</el-form-item>
-
 				<el-form-item label="Exceptions:">
 					<div v-if="event.exceptions.length > 0">
 						<el-row v-for="(exception, idx) in event.exceptions" :key="exception.senderId" type="flex" justify="left" :span="24" :sm="24" style="margin-bottom: 20px">
@@ -35,12 +32,10 @@
 							</el-col>
 						</el-row>
 					</div>
-
 					<div v-if="!formDisabled">
 						<el-button :disabled="formDisabled" type="text" icon="el-icon-circle-plus-outline" @click="addException">Ajouter une exception</el-button>
 					</div>
 				</el-form-item>
-
 				<el-form-item v-if="!formDisabled">
 					<el-button :disabled="formDisabled" type="primary" icon="el-icon-circle-plus-outline" @click="onSubmit">{{ buttonLabel }}</el-button>
 				</el-form-item>
@@ -51,7 +46,7 @@
 		<br />
 		<br />
 		<br />
-	</el-col>
+	</el-row>
 </template>
 
 <script>

@@ -6,7 +6,6 @@
 				|
 				<router-link v-if="event._id" :to="{ name: 'EventDraws', params: { eventId: event._id } }">Résultats</router-link>
 			</el-row>
-
 			<div v-for="(draw, index) in event.draws" :key="index">
 				<div>{{ draw.sender.name }} offre un cadeau à {{ draw.receiver.name }}</div>
 			</div>

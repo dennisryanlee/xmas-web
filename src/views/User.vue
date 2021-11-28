@@ -1,42 +1,22 @@
 <template>
-	<el-row type="flex" justify="center">
-		<el-col type="flex" :span="16" :xs="24">
-			<div class="user">
-				<h3>Page de {{ user.name }} 🌲</h3>
-
-				<br />
-				<el-divider></el-divider>
-				<br />
-
-				<DrawsList v-if="user._id" :userId="user._id" :key="user._id" />
-
-				<br />
-				<el-divider></el-divider>
-				<br />
-
-				<h3>Les souhaits de {{user.name}} 🎁</h3>
-				<br />
-
-				<WishesList v-if="user._id" :userId="user._id" :username="user.name" />
-
-				<br />
-				<br />
-				<br />
-			</div>
-		</el-col>
-	</el-row>
+	<div class="container mb-4 mb-lg-5">
+		<Overview :userId="user._id" />
+		<!-- <Tabs /> -->
+		<WishesList :userId="user._id" />
+	</div>
 </template>
 
 <script>
 import fetchApi from "@/services/http";
-import DrawsList from '@/components/DrawsList.vue'
+
+import Overview from '@/components/Overview.vue'
 import WishesList from '@/components/WishesList.vue'
 
 export default {
 	name: 'User',
 	components: {
-		DrawsList,
-		WishesList
+		Overview,
+		WishesList,
 	},
 	data() {
 		return {

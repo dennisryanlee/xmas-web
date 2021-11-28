@@ -38,7 +38,6 @@
 							<el-input type="number" :disabled="formDisabled" v-model="wish.price" placeholder="Prix" suffix-icon="el-icon-money"></el-input>
 						</el-form-item>
 					</el-col>
-
 					<el-col align="end">
 						<el-form-item v-if="currentUser._id !== userId">
 							<el-checkbox v-model="wish.hidden">Secret pour {{ username }}</el-checkbox>
@@ -98,7 +97,7 @@ export default {
 		},
 		async onSubmit() {
 			if (this.wish && this.wish._id) await this.updateWish(this.wish._id, this.wish)
-			else if (this.userId){
+			else if (this.userId) {
 				await this.createUserWish(this.userId, this.wish)
 				this.wish = {};
 			} else {

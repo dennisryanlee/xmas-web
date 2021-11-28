@@ -1,20 +1,15 @@
 <template>
-	<el-tooltip :content="username" placement="top">
-		<div class="vue-avatar--wrapper" :style="[style, customStyle]" aria-hidden="true" @click="navigate({ name: 'User', params: { userId: userId } })">
-			<!-- this img is not displayed; it is used to detect failure-to-load of div background image -->
-			<img v-if="this.isImage" style="display: none" :src="this.src" @error="onImgError" />
-			<span v-show="!this.isImage">{{ userInitial }}</span>
-		</div>
-	</el-tooltip>
+	<div class="vue-avatar--wrapper" :style="[style, customStyle]" aria-hidden="true">
+		<!-- this img is not displayed; it is used to detect failure-to-load of div background image -->
+		<img v-if="this.isImage" style="display: none" :src="this.src" @error="onImgError" />
+		<span v-show="!this.isImage">{{ userInitial }}</span>
+	</div>
 </template>
 
 <script>
 export default {
 	name: "Avatar",
 	props: {
-		userId: {
-			type: String,
-		},
 		username: {
 			type: String,
 		},
@@ -84,7 +79,8 @@ export default {
 
 	computed: {
 		background() {
-			if (!this.isImage) {
+			if (!this.isImage && this.username) {
+				if (this.username === 'Gautier') return 'red'
 				return (
 					this.backgroundColor ||
 					this.randomBackgroundColor(
@@ -98,6 +94,7 @@ export default {
 
 		fontColor() {
 			if (!this.isImage) {
+				if (this.username === 'Gautier') return 'white'
 				return this.color || this.lightenColor(this.background, this.lighten);
 			}
 			return "";
@@ -143,7 +140,7 @@ export default {
 		},
 
 		userInitial() {
-			if (!this.isImage) {
+			if (!this.isImage && this.username) {
 				const initials = this.initials || this.initial(this.username);
 				return initials;
 			}
@@ -204,9 +201,6 @@ export default {
 
 			return (usePound ? "#" : "") + (g | (b << 8) | (r << 16)).toString(16);
 		},
-		navigate(payload) {
-			this.$router.push(payload);
-		}
 	},
 };
 </script>

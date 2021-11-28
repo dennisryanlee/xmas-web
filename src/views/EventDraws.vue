@@ -5,7 +5,6 @@
 				<h3>Résultats</h3>
 				<el-divider></el-divider>
 				<br />
-
 				<DrawsList v-if="eventId" :eventId="eventId" />
 			</el-col>
 		</el-row>

@@ -5,12 +5,10 @@
 				<h3>Les Evènements ❄</h3>
 				<el-divider></el-divider>
 				<br />
-
 				<el-button type="primary" icon="el-icon-circle-plus-outline" @click="goToCreateEvent">Nouveau</el-button>
 				<br />
 				<br />
 				<br />
-
 				<el-row type="flex" justify="center">
 					<el-col type="flex">
 						<EventsList />

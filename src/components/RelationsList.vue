@@ -1,16 +1,21 @@
 <template>
-	<div class="relations-list">
-		<div v-for="relation in relations" :key="relation._id">
-			<el-row v-if="relation.user && relation.user._id" type="flex" align="center" justify="center" @click="navigate({ name: 'User', params: { userId: relation.user._id } })">
-				<div class="relations-list__account">
-					<el-row type="flex" align="center" justify="start">
-						<Avatar :userId="relation.user._id" :username="relation.user.name" :backgroundColor="(relation.user && relation.user.avatar && relation.user.avatar.backgroundColor) || 'black'" :color="(relation.user && relation.user.avatar && relation.user.avatar.color) || 'white'" :inline="true" :size="30" />
-						<router-link class="relations-list__inner-account" :to="{ name: 'User', params: { userId: relation.user._id } }">{{ relation.user.name }}</router-link>
-					</el-row>
-				</div>
-			</el-row>
-
-			<router-link v-else :to="{ name: 'Member', params: { memberId: relation._id } }">{{ relation.name }}</router-link>
+	<div class="row mt-lg-5">
+		<div class="col-12">
+			<b-list-group>
+				<b-list-group-item class="d-flex align-items-center" v-for="relation in relations" :key="relation._id">
+					<div class="list-description__user user-card row no-gutters">
+						<div class="col-auto d-flex">
+							<Avatar class="profile-picture profile-picture--small" :username="relation.user?.name || relation.name" :inline="true" :size="40" />
+						</div>
+						<div class="col-auto">
+							<div class="user-card__infos">
+								<router-link class="user-card__name" :to="`/users/${relation.user?._id}`">{{ relation.user?.name || relation.name }}</router-link>
+								<span class="user-card__info">2 envies - liste privée</span>
+							</div>
+						</div>
+					</div>
+				</b-list-group-item>
+			</b-list-group>
 		</div>
 	</div>
 </template>

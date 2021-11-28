@@ -7,7 +7,6 @@ import Home from "@/views/Home.vue";
 import User from "@/views/User.vue";
 import Relations from "@/views/Relations.vue";
 import Wishes from "@/views/Wishes.vue";
-import Member from "@/views/Member.vue";
 import NewEvent from "@/views/NewEvent.vue";
 import Event from "@/views/Event.vue";
 import Events from "@/views/Events.vue";
@@ -78,12 +77,6 @@ const routes = [
 		path: "/users/:userId",
 		name: "User",
 		component: User,
-		beforeEnter: authGuard
-	},
-	{
-		path: "/members/:memberId",
-		name: "Member",
-		component: Member,
 		beforeEnter: authGuard
 	},
 	{
