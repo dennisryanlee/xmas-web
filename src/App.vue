@@ -8,7 +8,7 @@
 		<b-alert class="container mb-4 mb-lg-5" :show="!!error" variant="danger">
 			<span class="text-center text-md-right d-flex justify-content-center">{{error}}</span>
 		</b-alert>
-		<router-view :key="$route.path" class="router-view" />
+		<router-view :key="$route.path"/>
 		<Footer />
 	</div>
 </template>

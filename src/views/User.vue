@@ -14,7 +14,7 @@
 			</div>
 		</template>
 	</Overview>
-	<!-- <WishesList :userId="user._id" /> -->
+	<WishesList :wishes="wishes" />
 </template>
 
 <script>
@@ -33,18 +33,25 @@ export default {
 	},
 	data() {
 		return {
-			user: {}
+			user: {},
+      wishes: []
 		}
 	},
 	methods: {
 		async getUser(userId) {
 			let { data: user = {} } = await fetchApi().get(`/users/${userId}`)
 			return user;
-		}
+		},
+
+    async getUserWishes(userId) {
+			let { data: wishes = [] } = await fetchApi().get(`/users/${userId}/wishes`);
+			return wishes;
+		},
 	},
 	async mounted() {
 		let { userId = null } = this.$route.params || {};
 		this.user = await this.getUser(userId);
+		this.wishes = await this.getUserWishes(this.user._id);
 	}
 }
 </script>

@@ -162,13 +162,10 @@ export default {
 		// Avatar
 	},
 	props: {
-		userId: String,
-		memberId: String,
-		username: String
+		wishes: Array
 	},
 	data() {
 		return {
-			wishes: [],
 			edit: false,
 			wishEdit: null,
 			addNewWish: false
