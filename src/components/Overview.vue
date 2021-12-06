@@ -15,8 +15,6 @@
 </template>
 
 <script>
-import fetchApi from "@/services/http";
-
 export default {
 	name: 'Overview',
 	props: {
@@ -26,21 +24,6 @@ export default {
 		description: {
 			type: String,
 		}
-	},
-	data() {
-		return {
-			user: {}
-		}
-	},
-	methods: {
-		async getUser(userId) {
-			let { data: user = {} } = await fetchApi().get(`/users/${userId}`)
-			return user;
-		}
-	},
-	async mounted() {
-		let { userId = null } = this.$route.params || {};
-		this.user = await this.getUser(userId);
 	}
 }
 </script>
