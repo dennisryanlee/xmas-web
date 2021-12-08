@@ -61,7 +61,7 @@ export default {
 		editWish: Object,
 		afterEdit: Function,
 		userId: String,
-		memberId: String,
+		contactId: String,
 		username: String
 	},
 	data() {
@@ -91,8 +91,8 @@ export default {
 			await fetchApi().post(`/users/${userId}/wishes`, payload)
 			this.$emit('after-edit');
 		},
-		async createMemberWish(memberId, payload) {
-			await fetchApi().post(`/members/${memberId}/wishes`, payload)
+		async createContactWish(contactId, payload) {
+			await fetchApi().post(`/contacts/${contactId}/wishes`, payload)
 			this.$emit('after-edit');
 		},
 		async onSubmit() {
@@ -101,7 +101,7 @@ export default {
 				await this.createUserWish(this.userId, this.wish)
 				this.wish = {};
 			} else {
-				await this.createMemberWish(this.memberId, this.wish)
+				await this.createContactWish(this.contactId, this.wish)
 				this.wish = {};
 			}
 		}

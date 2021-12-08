@@ -19,9 +19,9 @@
 					<div class="row no-gutters justify-content-between mt-4">
 						<div class="form-group session__field">
 							<div class="custom-control custom-checkbox">
-								<input name="user[remember_me]" type="hidden" value="0" />
-								<input class="custom-control-input" type="checkbox" value="1" name="user[remember_me]" id="user_remember_me" />
-								<label class="custom-control-label" for="user_remember_me">Se souvenir de moi</label>
+								<input name="user[recontact_me]" type="hidden" value="0" />
+								<input class="custom-control-input" type="checkbox" value="1" name="user[recontact_me]" id="user_recontact_me" />
+								<label class="custom-control-label" for="user_recontact_me">Se souvenir de moi</label>
 							</div>
 						</div>
 						<div class="form-group session__field"><a class="session__link" href="#">Mot de passe oublié ?</a></div>

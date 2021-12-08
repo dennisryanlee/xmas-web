@@ -1,5 +1,5 @@
 <template>
-	<Overview title="Carnet" description="Voici la liste de vos amis & famille & collègues" :avatar="false">
+	<Overview title="Vos contacts" description="Voici la liste de vos amis & famille & collègues" :avatar="false">
 		<template v-slot:actionButtons>
 			<div class="col-12 col-lg-3 mb-auto">
 				<div class="list-actions">

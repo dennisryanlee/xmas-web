@@ -11,12 +11,12 @@
 							</div>
 							<div class="col-auto">
 								<div class="user-card__infos">
-									<router-link class="user-card__name" :to="`/users/${contact.user?._id}`">{{ contact.user?.name || contact.name }}</router-link>
-									<span class="user-card__info">2 envies - liste privée</span>
+									<router-link class="user-card__name" :to="`/contacts/${contact._id}`">{{contact.name}}</router-link>
+									<span class="user-card__info">2 idées</span>
 								</div>
 							</div>
 						</div>
-						<b-button @click="removeContact(contact._id)" icon="pi pi-check" label="Confirm">delete</b-button>
+						<Button @click="removeContact(contact._id)" icon="pi pi-times-circle" class="p-button-danger" label="Supprimer" />
 
 					</b-list-group-item>
 				</b-list-group>
@@ -30,13 +30,15 @@
 <script>
 import Avatar from '@/components/Avatar.vue';
 import ConfirmDialog from 'primevue/confirmdialog';
+import Button from 'primevue/button';
 import { useConfirm } from "primevue/useconfirm";
 
 export default {
 	name: 'ContactsList',
 	components: {
 		Avatar,
-		ConfirmDialog
+		ConfirmDialog,
+		Button
 	},
 	props: {
 		title: String,

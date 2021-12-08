@@ -9,8 +9,8 @@
 					<el-checkbox :disabled="formDisabled" v-model="event.public">Tout le monde peut voir la liste</el-checkbox>
 				</el-form-item>
 				<el-form-item label="Participants:">
-					<el-select :disabled="formDisabled" :reserve-keyword="true" v-if="loaded" v-model="event.members" multiple filterable allow-create default-first-option placeholder="Participants">
-						<el-option v-for="item in members" :key="item._id" :label="item.name" :value="item._id"> </el-option>
+					<el-select :disabled="formDisabled" :reserve-keyword="true" v-if="loaded" v-model="event.contacts" multiple filterable allow-create default-first-option placeholder="Participants">
+						<el-option v-for="item in contacts" :key="item._id" :label="item.name" :value="item._id"> </el-option>
 					</el-select>
 				</el-form-item>
 				<el-form-item label="Exceptions:">
@@ -63,10 +63,10 @@ export default {
 		return {
 			event: {
 				name: null,
-				members: [],
+				contacts: [],
 				exceptions: []
 			},
-			members: [],
+			contacts: [],
 			loading: false,
 			loaded: false,
 			buttonLabel: 'Créer',
@@ -82,13 +82,13 @@ export default {
 			router.push({ name: 'Home' });
 		},
 		async getSenders() {
-			return this.members.filter(m => this.event && this.event.members && this.event.members.some(mbr => mbr === m._id)).map(m => Object.assign(m, { disabled: this.event.exceptions.some(mbr => `${mbr.senderId}` === `${m._id}`) }));
+			return this.contacts.filter(m => this.event && this.event.contacts && this.event.contacts.some(mbr => mbr === m._id)).map(m => Object.assign(m, { disabled: this.event.exceptions.some(mbr => `${mbr.senderId}` === `${m._id}`) }));
 		},
 		async setSenders() {
 			this.senders = await this.getSenders();
 		},
 		async getReceivers(index = null) {
-			return this.members.filter(m => this.event && this.event.members && this.event.members.some(mbr => mbr === m._id)).map(m => Object.assign(m, { disabled: !!(index !== null && this.event.exceptions[index].senderId === m._id) }));
+			return this.contacts.filter(m => this.event && this.event.contacts && this.event.contacts.some(mbr => mbr === m._id)).map(m => Object.assign(m, { disabled: !!(index !== null && this.event.exceptions[index].senderId === m._id) }));
 		},
 		async setReceivers(idx) {
 			this.receivers = await this.getReceivers(idx);
@@ -101,13 +101,13 @@ export default {
 			let { data: event = null } = await fetchApi().get(`/events/${eventId}`);
 			return event;
 		},
-		async getUserMembers() {
-			let { data: members = [] } = await fetchApi().get(`/users/${this.currentUser._id}/members`);
-			return members.filter(m => (!m.user || !m.user._id) || (m && m.user && m.user._id && this.event.members.some(mbr => `${mbr}` === `${m._id}`))).map(member => { return { _id: `${member._id}`, name: `${member.name}` } });
+		async getUserContacts() {
+			let { data: contacts = [] } = await fetchApi().get(`/users/${this.currentUser._id}/contacts`);
+			return contacts.filter(m => (!m.user || !m.user._id) || (m && m.user && m.user._id && this.event.contacts.some(mbr => `${mbr}` === `${m._id}`))).map(contact => { return { _id: `${contact._id}`, name: `${contact.name}` } });
 		},
 		async getContacts() {
-			let { data: members = [] } = await fetchApi().get(`/users/${this.currentUser._id}/contacts`);
-			return members.map(member => { return { _id: `${member._id}`, name: `${member.name}` } });
+			let { data: contacts = [] } = await fetchApi().get(`/users/${this.currentUser._id}/contacts`);
+			return contacts.map(contact => { return { _id: `${contact._id}`, name: `${contact.name}` } });
 		},
 		addException() {
 			this.event.exceptions.push({ senderId: null, receiverIds: [] })
@@ -125,13 +125,13 @@ export default {
 			this.formDisabled = true;
 
 			this.event = await this.getEvent(this.eventId);
-			this.members = await this.getUserMembers();
+			this.contacts = await this.getUserContacts();
 			this.senders = await this.getSenders();
 			this.receivers = await this.getReceivers();
 
 			this.loaded = true;
 		} else {
-			this.members = await this.getContacts();
+			this.contacts = await this.getContacts();
 			this.loaded = true;
 		}
 	}
