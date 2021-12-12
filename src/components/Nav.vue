@@ -10,7 +10,7 @@
 			<div class="collapse navbar-collapse" id="navbarNav">
 				<ul class="navbar-nav ml-lg-auto align-items-lg-center py-2 py-md-0">
 					<li class="navbar__item">
-						<router-link class="navbar__link navbar__link--col" to="/contacts">
+						<router-link class="navbar__link navbar__link--col" to="/lists">
 							<unicon viewBox="0 0 448 512" name="go-address-book" />
 							Carnet
 						</router-link>
@@ -71,7 +71,7 @@
 					<div class="dropdown d-none d-lg-block">
 						<a class="navbar__link nav-link p-0 ml-3" data-bs-toggle="dropdown" href="#" role="button">
 							<div class="navbar__profile-picture profile-picture profile-picture--small">
-								<Avatar class="profile-picture__img" :username="currentUser.name" :inline="true" :size="40" />
+								<Avatar class="profile-picture__img" :username="currentUser.firstName" :inline="true" :size="40" />
 							</div>
 						</a>
 						<div class="navbar__dropdown dropdown-menu dropdown-menu-right">

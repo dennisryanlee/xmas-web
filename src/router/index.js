@@ -5,8 +5,8 @@ import Login from "@/views/Login.vue";
 import Register from "@/views/Register.vue";
 import Home from "@/views/Home.vue";
 import User from "@/views/User.vue";
-import Contacts from "@/views/Contacts.vue";
-import Contact from "@/views/Contact.vue";
+import Lists from "@/views/Lists.vue";
+import List from "@/views/List.vue";
 import Wishes from "@/views/Wishes.vue";
 import NewEvent from "@/views/NewEvent.vue";
 import Event from "@/views/Event.vue";
@@ -41,7 +41,7 @@ const routes = [
 	{
 		path: "/",
 		name: "Home",
-		component: Home,
+		component: Lists,
 		beforeEnter: authGuard
 	},
 	{
@@ -69,15 +69,15 @@ const routes = [
 		beforeEnter: authGuard
 	},
   {
-		path: "/contacts",
-		name: "Contacts",
-		component: Contacts,
+		path: "/lists",
+		name: "Lists",
+		component: Lists,
 		beforeEnter: authGuard
 	},
   {
-		path: "/contacts/:contactId",
-		name: "Contact",
-		component: Contact,
+		path: "/lists/:listId",
+		name: "List",
+		component: List,
 		beforeEnter: authGuard
 	},
 	{

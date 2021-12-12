@@ -9,8 +9,8 @@
 					<el-checkbox :disabled="formDisabled" v-model="event.public">Tout le monde peut voir la liste</el-checkbox>
 				</el-form-item>
 				<el-form-item label="Participants:">
-					<el-select :disabled="formDisabled" :reserve-keyword="true" v-if="loaded" v-model="event.contacts" multiple filterable allow-create default-first-option placeholder="Participants">
-						<el-option v-for="item in contacts" :key="item._id" :label="item.name" :value="item._id"> </el-option>
+					<el-select :disabled="formDisabled" :reserve-keyword="true" v-if="loaded" v-model="event.lists" multiple filterable allow-create default-first-option placeholder="Participants">
+						<el-option v-for="item in lists" :key="item._id" :label="item.name" :value="item._id"> </el-option>
 					</el-select>
 				</el-form-item>
 				<el-form-item label="Exceptions:">
@@ -63,10 +63,10 @@ export default {
 		return {
 			event: {
 				name: null,
-				contacts: [],
+				lists: [],
 				exceptions: []
 			},
-			contacts: [],
+			lists: [],
 			loading: false,
 			loaded: false,
 			buttonLabel: 'Créer',
@@ -82,13 +82,13 @@ export default {
 			router.push({ name: 'Home' });
 		},
 		async getSenders() {
-			return this.contacts.filter(m => this.event && this.event.contacts && this.event.contacts.some(mbr => mbr === m._id)).map(m => Object.assign(m, { disabled: this.event.exceptions.some(mbr => `${mbr.senderId}` === `${m._id}`) }));
+			return this.lists.filter(m => this.event && this.event.lists && this.event.lists.some(mbr => mbr === m._id)).map(m => Object.assign(m, { disabled: this.event.exceptions.some(mbr => `${mbr.senderId}` === `${m._id}`) }));
 		},
 		async setSenders() {
 			this.senders = await this.getSenders();
 		},
 		async getReceivers(index = null) {
-			return this.contacts.filter(m => this.event && this.event.contacts && this.event.contacts.some(mbr => mbr === m._id)).map(m => Object.assign(m, { disabled: !!(index !== null && this.event.exceptions[index].senderId === m._id) }));
+			return this.lists.filter(m => this.event && this.event.lists && this.event.lists.some(mbr => mbr === m._id)).map(m => Object.assign(m, { disabled: !!(index !== null && this.event.exceptions[index].senderId === m._id) }));
 		},
 		async setReceivers(idx) {
 			this.receivers = await this.getReceivers(idx);
@@ -101,13 +101,13 @@ export default {
 			let { data: event = null } = await fetchApi().get(`/events/${eventId}`);
 			return event;
 		},
-		async getUserContacts() {
-			let { data: contacts = [] } = await fetchApi().get(`/users/${this.currentUser._id}/contacts`);
-			return contacts.filter(m => (!m.user || !m.user._id) || (m && m.user && m.user._id && this.event.contacts.some(mbr => `${mbr}` === `${m._id}`))).map(contact => { return { _id: `${contact._id}`, name: `${contact.name}` } });
+		async getUserLists() {
+			let { data: lists = [] } = await fetchApi().get(`/users/${this.currentUser._id}/lists`);
+			return lists.filter(m => (!m.user || !m.user._id) || (m && m.user && m.user._id && this.event.lists.some(mbr => `${mbr}` === `${m._id}`))).map(list => { return { _id: `${list._id}`, name: `${list.name}` } });
 		},
-		async getContacts() {
-			let { data: contacts = [] } = await fetchApi().get(`/users/${this.currentUser._id}/contacts`);
-			return contacts.map(contact => { return { _id: `${contact._id}`, name: `${contact.name}` } });
+		async getLists() {
+			let { data: lists = [] } = await fetchApi().get(`/users/${this.currentUser._id}/lists`);
+			return lists.map(list => { return { _id: `${list._id}`, name: `${list.name}` } });
 		},
 		addException() {
 			this.event.exceptions.push({ senderId: null, receiverIds: [] })
@@ -125,13 +125,13 @@ export default {
 			this.formDisabled = true;
 
 			this.event = await this.getEvent(this.eventId);
-			this.contacts = await this.getUserContacts();
+			this.lists = await this.getUserLists();
 			this.senders = await this.getSenders();
 			this.receivers = await this.getReceivers();
 
 			this.loaded = true;
 		} else {
-			this.contacts = await this.getContacts();
+			this.lists = await this.getLists();
 			this.loaded = true;
 		}
 	}

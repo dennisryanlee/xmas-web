@@ -13,7 +13,7 @@
 						<li class="footer__item"><a class="footer__link" href="#">Centre d'aide</a></li>
 						<li class="footer__item"><a class="footer__link" href="#">Ajoute une idée</a></li>
 						<li class="footer__item"><a class="footer__link" href="#">Créer une Cacahuète</a></li>
-						<li class="footer__item"><a class="footer__link" href="#">Contactez-nous</a></li>
+						<li class="footer__item"><a class="footer__link" href="#">Listez-nous</a></li>
 						<li class="footer__item"><a class="footer__link" href="javascript:openAxeptioCookies()">Préférences Cookies</a></li>
 					</ul>
 				</div>

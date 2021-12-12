@@ -4,19 +4,19 @@
 			<div class="col-12">
 				<div class="thumb__title thumb__title--bigger">{{title}}</div>
 				<b-list-group>
-					<b-list-group-item class="d-flex justify-content-between align-items-center" v-for="(contact, index)  in contacts" :key="index">
+					<b-list-group-item class="d-flex justify-content-between align-items-center" v-for="(list, index)  in lists" :key="index">
 						<div class="list-description__user user-card row no-gutters">
 							<div class="col-auto d-flex">
-								<Avatar class="profile-picture profile-picture--small" :username="contact.name" :inline="true" :size="40" />
+								<Avatar class="profile-picture profile-picture--small" :username="list.name" :inline="true" :size="40" />
 							</div>
 							<div class="col-auto">
 								<div class="user-card__infos">
-									<router-link class="user-card__name" :to="`/contacts/${contact._id}`">{{contact.name}}</router-link>
-									<span class="user-card__info">2 idées</span>
+									<router-link class="user-card__name" :to="`/lists/${list._id}`">{{list.name}}</router-link>
+									<span class="user-card__info">{{Math.floor(Math.random() * 100)}} idées</span>
 								</div>
 							</div>
 						</div>
-						<Button @click="removeContact(contact._id)" icon="pi pi-times-circle" class="p-button-danger" label="Supprimer" />
+						<Button @click="removeList(list._id)" icon="pi pi-times-circle" class="p-button-danger" label="Supprimer" />
 
 					</b-list-group-item>
 				</b-list-group>
@@ -34,7 +34,7 @@ import Button from 'primevue/button';
 import { useConfirm } from "primevue/useconfirm";
 
 export default {
-	name: 'ContactsList',
+	name: 'ListsList',
 	components: {
 		Avatar,
 		ConfirmDialog,
@@ -42,7 +42,7 @@ export default {
 	},
 	props: {
 		title: String,
-		contacts: Array,
+		lists: Array,
 	},
 	setup() {
 		const confirm = useConfirm();
@@ -50,9 +50,9 @@ export default {
 		return { confirm }
 	},
 	emits: {
-		onRemoveContact: (contactId) => {
-			if (contactId) {
-				console.log('contract:', contactId)
+		onRemoveList: (listId) => {
+			if (listId) {
+				console.log('contract:', listId)
 				return true
 			} else {
 				console.warn('Invalid submit event payload!')
@@ -61,15 +61,15 @@ export default {
 		}
 	},
 	methods: {
-		removeContact(contactId) {
+		removeList(listId) {
 			this.confirm.require({
 				message: 'Are you sure you want to proceed?',
 				header: 'Confirmation',
 				icon: 'pi pi-exclamation-triangle',
 				accept: () => {
-					console.log('accept', contactId)
+					console.log('accept', listId)
 
-					this.$emit('onRemoveContact', contactId)
+					this.$emit('onRemoveList', listId)
 				},
 				reject: () => { }
 			});

@@ -47,7 +47,7 @@
 					<span class="session__tooltip" data-placement="top" data-title="Veuillez accepter les conditions générales d'utilisation et la politique de confidentialité" data-tooltip="tooltip" data-original-title="" title=""><input type="submit" name="commit" value="Créer un compte" class="session__btn" id="session__submit" data-disable-with="S'inscrire"></span>
 				</form>
 				<div class="session__switch">Déjà inscrit sur doussay.com ? <a class="session__link sign-in-link" href="/login">Se connecter</a></div>
-				<div class="session__privacy mb-0">Conformément à la réglementation applicable en matière de protection des données personnelles, vous pouvez exercer votre droit d'accès, rectification, suppression, limitation, opposition et portabilité des données vous concernant en nous contactant sur <a class="session__link" href="mailto:privacy@doussay.com">privacy@doussay.com</a></div>
+				<div class="session__privacy mb-0">Conformément à la réglementation applicable en matière de protection des données personnelles, vous pouvez exercer votre droit d'accès, rectification, suppression, limitation, opposition et portabilité des données vous concernant en nous listant sur <a class="session__link" href="mailto:privacy@doussay.com">privacy@doussay.com</a></div>
 				<div class="session__privacy">Ce site est protégé par reCAPTCHA et la <a class="session__link" href="https://policies.google.com/privacy">politique de confidentialité</a> et les <a class="session__link" href="https://policies.google.com/terms">conditions d'utilisation</a> de Google s'appliquent.</div>
 			</div>
 		</div>

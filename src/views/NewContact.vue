@@ -1,14 +1,14 @@
 <template>
-	<ContactForm />
+	<ListForm />
 </template>
 
 <script>
-import ContactForm from '@/components/ContactForm.vue'
+import ListForm from '@/components/ListForm.vue'
 
 export default {
-	name: 'NewContact',
+	name: 'NewList',
 	components: {
-		ContactForm
+		ListForm
 	},
 }
 </script>

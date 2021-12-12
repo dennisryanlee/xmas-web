@@ -1,9 +1,9 @@
 <template>
-	<form class="new_user" id="new_user" action="/account" accept-charset="UTF-8" :model="contact" v-on:submit.prevent="onSubmit">
+	<form class="new_user" id="new_user" action="/account" accept-charset="UTF-8" :model="list" v-on:submit.prevent="onSubmit">
 		<div class="form-row">
 			<div class="col-md-12">
 				<div class="form-group session__field">
-					<b-form-input placeholder="Nom" autocomplete="last-name" class="form-control" required="required" v-model="contact.name"></b-form-input>
+					<b-form-input placeholder="Nom" autocomplete="last-name" class="form-control" required="required" v-model="list.name"></b-form-input>
 					<div class="form__errors"></div>
 				</div>
 			</div>
@@ -20,21 +20,21 @@ import router from "@/router";
 import store from '@/store';
 
 export default {
-	name: 'ContactForm',
+	name: 'ListForm',
 	data() {
 		return {
-			contact: {}
+			list: {}
 		}
 	},
   emits: ['onCreated'],
 	methods: {
 		async onSubmit() {
-			await this.createEvent(this.contact);
-			this.$notify({ title: 'Succès', message: "Votre contact vient d'etre créé", type: 'success' });
-			router.push('/contacts');
+			await this.createEvent(this.list);
+			this.$notify({ title: 'Succès', message: "Votre list vient d'etre créé", type: 'success' });
+			router.push('/lists');
 		},
 		async createEvent(payload) {
-			await fetchApi().post(`/users/${this.currentUser._id}/contacts`, payload);
+			await fetchApi().post(`/users/${this.currentUser._id}/lists`, payload);
 
       this.$emit('onCreated')
 			return true;

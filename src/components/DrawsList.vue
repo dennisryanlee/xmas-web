@@ -19,7 +19,7 @@ export default {
 	props: {
 		eventId: String,
 		userId: String,
-		contactId: String
+		listId: String
 	},
 	data() {
 		return {
@@ -31,8 +31,8 @@ export default {
 			let { data: draws = [] } = await fetchApi().get(`/users/${userId}/draws`);
 			return draws;
 		},
-		async getContactDraws(contactId) {
-			let { data: draws = [] } = await fetchApi().get(`/contacts/${contactId}/draws`);
+		async getListDraws(listId) {
+			let { data: draws = [] } = await fetchApi().get(`/lists/${listId}/draws`);
 			return draws;
 		},
 		async getEventDraws(eventId) {
@@ -42,7 +42,7 @@ export default {
 	},
 	async mounted() {
 		if (this.userId) this.draws = await this.getUserDraws(this.userId)
-		else if (this.contactId) this.draws = await this.getContactDraws(this.contactId)
+		else if (this.listId) this.draws = await this.getListDraws(this.listId)
 		else this.draws = await this.getEventDraws(this.eventId);
 	},
 	computed: {
